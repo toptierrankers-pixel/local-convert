@@ -3,13 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>JSON to CSV converter — flattens nested objects, runs in your browser</title>
+<title>JSON to CSV - flattens nested data | Local Convert</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 <meta name="description" content="Convert JSON to CSV in the browser. Nested objects flatten into dotted columns and arrays are handled properly. Nothing is uploaded.">
 <link rel="canonical" href="https://local-convert.toptierrankers.workers.dev/json-to-csv.html">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Local Convert">
-<meta property="og:title" content="JSON to CSV — flattens nested objects">
+<meta property="og:title" content="JSON to CSV , flattens nested objects">
 <meta property="og:description" content="Convert JSON to CSV in your browser. Nested objects become dotted columns. Nothing uploaded.">
 <meta property="og:url" content="https://local-convert.toptierrankers.workers.dev/json-to-csv.html">
 <meta name="twitter:card" content="summary_large_image">
@@ -56,7 +60,7 @@
 
   <label class="drop" id="drop">
     <div class="drop-title">Drop a JSON file here</div>
-    <div class="drop-hint">or click to choose — or paste into the box below</div>
+    <div class="drop-hint">or click to choose , or paste into the box below</div>
     <input type="file" id="file" accept=".json,application/json,.txt">
   </label>
 
@@ -120,7 +124,7 @@
   <article class="prose">
 
     <h2>The problem with converting JSON to CSV</h2>
-    <p>JSON is a tree. CSV is a grid. There is no lossless mapping between them, so every converter has to make decisions about how to force one shape into the other — and the quality of a converter is entirely about how sensible those decisions are.</p>
+    <p>JSON is a tree. CSV is a grid. There is no lossless mapping between them, so every converter has to make decisions about how to force one shape into the other , and the quality of a converter is entirely about how sensible those decisions are.</p>
     <p>Three problems come up every time, and most tools handle at least one of them badly.</p>
 
     <h3>Nested objects</h3>
@@ -130,8 +134,8 @@
     <h3>Arrays</h3>
     <p>A field holding three tags has no natural single-cell representation, and the right answer genuinely depends on what you are doing:</p>
     <ul>
-      <li><strong>Joined into one cell</strong> is best when you are reading the data — a cell showing <code>founder;engineer</code> is immediately legible.</li>
-      <li><strong>Numbered columns</strong> — <code>tags.0</code>, <code>tags.1</code> — is best when you need to filter or pivot on individual values. The downside is that one record with fifty entries creates fifty columns for everyone.</li>
+      <li><strong>Joined into one cell</strong> is best when you are reading the data , a cell showing <code>founder;engineer</code> is immediately legible.</li>
+      <li><strong>Numbered columns</strong> , <code>tags.0</code>, <code>tags.1</code> , is best when you need to filter or pivot on individual values. The downside is that one record with fifty entries creates fifty columns for everyone.</li>
       <li><strong>Raw JSON in the cell</strong> is best when the data is going into another program that will parse it again.</li>
     </ul>
     <p>This tool lets you pick, because there is no single correct choice.</p>
@@ -142,7 +146,7 @@
 
     <h2>Escaping, and why it matters more than it sounds</h2>
     <p>CSV has one genuinely important rule: a field containing the delimiter, a double quote, or a line break must be wrapped in double quotes, and any double quotes inside it must be doubled.</p>
-    <p>This is where hand-rolled converters break. A company name like <code>Smith, Jones &amp; Co</code> contains a comma. Written without quoting, it splits into two columns and every field after it shifts left by one — for that row only. Open the result in a spreadsheet and you get data that looks almost right, which is considerably worse than data that looks obviously broken.</p>
+    <p>This is where hand-rolled converters break. A company name like <code>Smith, Jones &amp; Co</code> contains a comma. Written without quoting, it splits into two columns and every field after it shifts left by one , for that row only. Open the result in a spreadsheet and you get data that looks almost right, which is considerably worse than data that looks obviously broken.</p>
     <p>The output here is quoted according to RFC 4180, so commas, quotes and newlines inside values survive the round trip.</p>
 
     <h2>Getting Excel to open it correctly</h2>
@@ -167,7 +171,7 @@
     <div class="faq">
       <details>
         <summary>Is my data uploaded anywhere?</summary>
-        <p>No. Parsing and conversion happen in this browser tab. You can confirm it in the Network tab of developer tools — no request carries your JSON.</p>
+        <p>No. Parsing and conversion happen in this browser tab. You can confirm it in the Network tab of developer tools , no request carries your JSON.</p>
       </details>
       <details>
         <summary>What JSON structures does it accept?</summary>
@@ -179,7 +183,7 @@
       </details>
       <details>
         <summary>Why does my CSV look wrong in Excel?</summary>
-        <p>Two usual causes. Accented characters mangled means the encoding was not detected — keep the BOM option on. Everything in one column means your Excel expects semicolons; re-export with the semicolon delimiter.</p>
+        <p>Two usual causes. Accented characters mangled means the encoding was not detected , keep the BOM option on. Everything in one column means your Excel expects semicolons; re-export with the semicolon delimiter.</p>
       </details>
       <details>
         <summary>What if records have different fields?</summary>
@@ -187,7 +191,7 @@
       </details>
       <details>
         <summary>Can I convert back to JSON afterwards?</summary>
-        <p>Yes — the CSV to JSON tool reads the same dotted column convention, so <code>address.city</code> rebuilds into a nested object. Type information is not perfectly preserved in the round trip, since CSV has no types.</p>
+        <p>Yes , the CSV to JSON tool reads the same dotted column convention, so <code>address.city</code> rebuilds into a nested object. Type information is not perfectly preserved in the round trip, since CSV has no types.</p>
       </details>
     </div>
   </section>
@@ -299,7 +303,7 @@
     }
 
     if(!Array.isArray(data)){ say('Expected an array of records, or an object containing one.','err'); return; }
-    if(!data.length){ say('That JSON is an empty array — nothing to convert.','err'); return; }
+    if(!data.length){ say('That JSON is an empty array , nothing to convert.','err'); return; }
 
     var rows = [], keys = [], seen = {};
     for(var i=0;i<data.length;i++){
@@ -328,7 +332,7 @@
 
   copy.addEventListener('click',function(){
     navigator.clipboard.writeText(out.value).then(function(){ say('CSV copied.','ok'); },
-      function(){ say('Copy blocked by the browser — select the text instead.','err'); });
+      function(){ say('Copy blocked by the browser , select the text instead.','err'); });
   });
 
   dl.addEventListener('click',function(){

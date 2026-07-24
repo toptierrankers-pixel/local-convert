@@ -3,15 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CSV to JSON with nested objects — converts in your browser</title>
+<title>CSV to JSON - nested objects, no upload | Local Convert</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 <meta name="description" content="Convert CSV to JSON in the browser, including dotted headers like user.address.city that become real nested objects. Handles quoted fields and embedded commas.">
 <meta name="robots" content="index, follow">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Local Convert">
-<meta property="og:title" content="CSV to JSON with nested objects — converts in your browser">
+<meta property="og:title" content="CSV to JSON with nested objects , converts in your browser">
 <meta property="og:description" content="Convert CSV to JSON in the browser, including dotted headers like user.address.city that become real nested objects.">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CSV to JSON with nested objects — converts in your browser">
+<meta name="twitter:title" content="CSV to JSON with nested objects , converts in your browser">
 <meta name="twitter:description" content="Convert CSV to JSON in the browser, including dotted headers like user.address.city that become real nested objects.">
 <link rel="canonical" href="https://local-convert.toptierrankers.workers.dev/csv-to-json.html">
 <meta name="robots" content="index,follow,max-image-preview:large">
@@ -27,11 +31,11 @@
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Local Convert">
-<meta property="og:title" content="CSV to nested JSON — in your browser">
+<meta property="og:title" content="CSV to nested JSON , in your browser">
 <meta property="og:description" content="Convert CSV to JSON in the browser, including dotted headers like user.address.city that become real nested objects. Handles quoted fields and embedded commas.">
 <meta property="og:url" content="https://local-convert.toptierrankers.workers.dev/csv-to-json.html">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="CSV to nested JSON — in your browser">
+<meta name="twitter:title" content="CSV to nested JSON , in your browser">
 <meta name="twitter:description" content="Convert CSV to JSON in the browser, including dotted headers like user.address.city that become real nested objects. Handles quoted fields and embedded commas.">
 <meta name="theme-color" content="#1B1830">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -56,7 +60,7 @@
 
   <p class="eyebrow">Structured output</p>
   <h1>CSV to nested JSON</h1>
-  <p class="lede">Most converters flatten everything into one level. This one reads dotted headers — a column called <code>address.city</code> becomes a real nested object, and <code>tags[]</code> becomes an array.</p>
+  <p class="lede">Most converters flatten everything into one level. This one reads dotted headers , a column called <code>address.city</code> becomes a real nested object, and <code>tags[]</code> becomes an array.</p>
 
   <div class="plate">
     <div class="plate-slot from">
@@ -76,7 +80,7 @@
 
   <label class="drop" id="drop">
     <div class="drop-title">Drop a CSV file here</div>
-    <div class="drop-hint">or click to choose — or just paste into the box below</div>
+    <div class="drop-hint">or click to choose , or just paste into the box below</div>
     <input type="file" id="file" accept=".csv,.tsv,.txt,text/csv" >
   </label>
 
@@ -132,7 +136,7 @@
   </div>
 
   <div class="privacy">
-    <p><strong>Nothing is uploaded.</strong> This matters more for spreadsheets than for photos — CSV exports usually hold customer names, emails and order data. Parsing happens in this tab and the data never reaches a server.</p>
+    <p><strong>Nothing is uploaded.</strong> This matters more for spreadsheets than for photos , CSV exports usually hold customer names, emails and order data. Parsing happens in this tab and the data never reaches a server.</p>
   </div>
 
   <div class="privacy" style="border-left-color:var(--pink)">
@@ -143,7 +147,7 @@
   <article class="prose">
 
     <h2>Why dotted headers exist</h2>
-    <p>Most CSV to JSON converters produce a flat object per row. Every column becomes a top-level key, and that is the end of it. That works until the data you are producing needs to go somewhere that expects structure — an API, a config file, a document database — at which point you are writing a script to reshape the output anyway.</p>
+    <p>Most CSV to JSON converters produce a flat object per row. Every column becomes a top-level key, and that is the end of it. That works until the data you are producing needs to go somewhere that expects structure , an API, a config file, a document database , at which point you are writing a script to reshape the output anyway.</p>
     <p>The dotted header convention solves this at the source. A column named <code>address.city</code> becomes a <code>city</code> property inside an <code>address</code> object. Nesting can go as deep as you like: <code>company.billing.address.country</code> creates four levels. Columns sharing a prefix merge into the same object automatically.</p>
     <p>Input like this:</p>
     <ul>
@@ -164,7 +168,7 @@
     </ul>
     <p>That is right most of the time and wrong in a few specific cases that matter a great deal.</p>
     <h3>The leading zero problem</h3>
-    <p>A postcode of <code>01234</code> is not the number 1234. A phone number starting with a zero, a bank sort code, a product SKU with a fixed-width numeric format — converting any of these to numbers destroys the leading zero permanently.</p>
+    <p>A postcode of <code>01234</code> is not the number 1234. A phone number starting with a zero, a bank sort code, a product SKU with a fixed-width numeric format , converting any of these to numbers destroys the leading zero permanently.</p>
     <p>The parser here deliberately guards against this: a numeric-looking value is only converted if converting and converting back produces exactly the original string. <code>01234</code> fails that test and stays a string. So does a 20-digit identifier that would lose precision as a floating point number.</p>
     <p>If you want everything as strings regardless, turn type detection off.</p>
 
@@ -175,7 +179,7 @@
 
     <h2>Delimiters beyond the comma</h2>
     <p>Plenty of files described as CSV are not comma separated. Excel in European locales exports semicolons by default, because the comma is the decimal separator in those regions. Database exports frequently use tabs or pipes.</p>
-    <p>Automatic detection counts candidate delimiters in the header row and picks the most frequent, which is right nearly all of the time. When it guesses wrong — usually because a header itself contains a comma — set the delimiter manually.</p>
+    <p>Automatic detection counts candidate delimiters in the header row and picks the most frequent, which is right nearly all of the time. When it guesses wrong , usually because a header itself contains a comma , set the delimiter manually.</p>
 
     <h2>Checking the output before you rely on it</h2>
     <p>A few things worth glancing at, because they are much cheaper to catch now than downstream:</p>
@@ -212,7 +216,7 @@
         <p>Yes. The parser tracks quote state character by character, so delimiters, escaped quotes and line breaks inside quoted fields are handled correctly.</p>
       </details>
       <details>
-        <summary>My file uses semicolons — will that work?</summary>
+        <summary>My file uses semicolons , will that work?</summary>
         <p>Yes. Automatic detection usually catches it, and you can set the delimiter manually if it guesses wrong. Semicolon exports are the default in European Excel locales.</p>
       </details>
       <details>
@@ -358,7 +362,7 @@
 
   copy.addEventListener('click', function(){
     navigator.clipboard.writeText(out.value).then(function(){ say('JSON copied.','ok'); },
-      function(){ say('Copy blocked by the browser — select the text instead.','err'); });
+      function(){ say('Copy blocked by the browser , select the text instead.','err'); });
   });
 
   dl.addEventListener('click', function(){

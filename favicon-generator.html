@@ -3,13 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Favicon generator — every size plus the manifest, in your browser</title>
+<title>Favicon generator - full set + manifest | Local Convert</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 <meta name="description" content="Turn one image into a complete favicon set: favicon.ico, Apple touch icon, Android icons, site.webmanifest and the HTML to paste. Runs in your browser with no upload.">
 <link rel="canonical" href="https://local-convert.toptierrankers.workers.dev/favicon-generator.html">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Local Convert">
-<meta property="og:title" content="Favicon generator — every size, no upload">
+<meta property="og:title" content="Favicon generator , every size, no upload">
 <meta property="og:description" content="One image in, a complete favicon set out: .ico, Apple touch icon, Android icons, manifest and the HTML snippet.">
 <meta property="og:url" content="https://local-convert.toptierrankers.workers.dev/favicon-generator.html">
 <meta name="twitter:card" content="summary_large_image">
@@ -36,7 +40,7 @@
 
   <p class="eyebrow">Web icons</p>
   <h1>Favicon generator</h1>
-  <p class="lede">One image in, the whole set out — <code>favicon.ico</code> with three resolutions inside it, the Apple touch icon, Android icons, a web manifest, and the HTML to paste into your head.</p>
+  <p class="lede">One image in, the whole set out , <code>favicon.ico</code> with three resolutions inside it, the Apple touch icon, Android icons, a web manifest, and the HTML to paste into your head.</p>
 
   <div class="plate">
     <div class="plate-slot from">
@@ -56,7 +60,7 @@
 
   <label class="drop" id="drop">
     <div class="drop-title">Drop your icon here</div>
-    <div class="drop-hint">SVG, PNG or JPG — square works best, 512px or larger</div>
+    <div class="drop-hint">SVG, PNG or JPG , square works best, 512px or larger</div>
     <input type="file" id="file" accept="image/png,image/jpeg,image/svg+xml,image/webp">
   </label>
 
@@ -111,17 +115,17 @@
     <p>Favicons accumulated a lot of cruft over two decades. At one point the recommended set ran to more than twenty files, covering Windows tile icons, a dozen Apple device resolutions, and formats for browsers that no longer exist. Most of that is now dead weight.</p>
     <p>The set this tool produces is the modern minimum that still covers everything with real usage:</p>
     <ul>
-      <li><code>favicon.ico</code> — 16, 32 and 48 pixel versions bundled in one file. Still needed because browsers request it from the site root whether you reference it or not, and because it is what appears in bookmark lists and some address bars.</li>
-      <li><code>favicon-32.png</code> and <code>favicon-16.png</code> — what modern browsers actually display in the tab.</li>
-      <li><code>apple-touch-icon.png</code> at 180×180 — used when someone adds your site to an iOS home screen. iOS ignores the ICO entirely.</li>
-      <li><code>icon-192.png</code> and <code>icon-512.png</code> — Android home screen and the PWA install prompt. The 512 is also what gets used in app switchers and splash screens.</li>
-      <li><code>site.webmanifest</code> — tells Android which icons to use and what to call the app.</li>
+      <li><code>favicon.ico</code> , 16, 32 and 48 pixel versions bundled in one file. Still needed because browsers request it from the site root whether you reference it or not, and because it is what appears in bookmark lists and some address bars.</li>
+      <li><code>favicon-32.png</code> and <code>favicon-16.png</code> , what modern browsers actually display in the tab.</li>
+      <li><code>apple-touch-icon.png</code> at 180×180 , used when someone adds your site to an iOS home screen. iOS ignores the ICO entirely.</li>
+      <li><code>icon-192.png</code> and <code>icon-512.png</code> , Android home screen and the PWA install prompt. The 512 is also what gets used in app switchers and splash screens.</li>
+      <li><code>site.webmanifest</code> , tells Android which icons to use and what to call the app.</li>
     </ul>
     <p>Six image files and one JSON file. That covers Chrome, Safari, Firefox, Edge, iOS, and Android without carrying files nothing requests.</p>
 
     <h2>Why the .ico file contains three images</h2>
     <p>ICO is a container format, not a single image. One <code>.ico</code> can hold several resolutions, and the operating system or browser picks whichever fits the context it is drawing into. A browser tab wants 16px. A bookmark bar might want 32. A Windows desktop shortcut reaches for 48.</p>
-    <p>If you only supply a single large image and let the browser scale it down, small sizes come out muddy — downscaling a detailed 512px logo to 16px by algorithm produces a grey smear. Generating each size separately means each one is encoded from the source at its target dimensions, which is noticeably sharper at the sizes that matter most.</p>
+    <p>If you only supply a single large image and let the browser scale it down, small sizes come out muddy , downscaling a detailed 512px logo to 16px by algorithm produces a grey smear. Generating each size separately means each one is encoded from the source at its target dimensions, which is noticeably sharper at the sizes that matter most.</p>
 
     <h3>Design for 16 pixels, not for 512</h3>
     <p>This is the mistake almost everyone makes. A logo that looks great on a business card usually fails completely at 16×16, because at that size you have roughly the detail budget of a single letterform. Wordmarks become illegible. Thin strokes disappear. Gradients turn into flat mud.</p>
@@ -129,20 +133,20 @@
 
     <h2>SVG source versus PNG source</h2>
     <p>Feeding in an SVG generally gives sharper results, because each size is rasterised from vector geometry at its target resolution rather than resampled from a fixed grid of pixels. If you have the original vector, use it.</p>
-    <p>Two caveats. SVGs referencing external fonts will render with fallback fonts, since the font is not embedded — convert text to outlines first. And SVGs relying on CSS defined outside the file itself will lose that styling.</p>
+    <p>Two caveats. SVGs referencing external fonts will render with fallback fonts, since the font is not embedded , convert text to outlines first. And SVGs relying on CSS defined outside the file itself will lose that styling.</p>
     <p>If you only have a PNG, start from at least 512×512. Upscaling a 64px logo produces a soft 512 icon and there is no recovering detail that was never captured.</p>
 
     <h2>Where the files go</h2>
-    <p>Put all six images and the manifest in your site root — the same folder as <code>index.html</code>. The root matters specifically for <code>favicon.ico</code>, because browsers request <code>/favicon.ico</code> directly regardless of what your HTML says. Then paste the generated snippet into your <code>&lt;head&gt;</code>.</p>
+    <p>Put all six images and the manifest in your site root , the same folder as <code>index.html</code>. The root matters specifically for <code>favicon.ico</code>, because browsers request <code>/favicon.ico</code> directly regardless of what your HTML says. Then paste the generated snippet into your <code>&lt;head&gt;</code>.</p>
     <p>If your site lives in a subdirectory, change the leading <code>/</code> in each path to a relative path instead.</p>
 
     <h2>Why your new favicon still is not showing</h2>
     <p>Favicons are cached more aggressively than almost anything else on the web, and a normal refresh will not clear one. This causes an enormous amount of confusion.</p>
     <ul>
-      <li><strong>Hard reload first</strong> — Ctrl+Shift+R, or Cmd+Shift+R on Mac.</li>
-      <li><strong>Load the file directly</strong> — visit <code>yoursite.com/favicon.ico</code>. If the old icon appears there, it is a cache issue. If you get a 404, the file is in the wrong place.</li>
-      <li><strong>Try a private window</strong> — this bypasses the favicon cache entirely and shows you what a new visitor sees.</li>
-      <li><strong>Give it time</strong> — some browsers hold favicons for days regardless of what you do. If it works in a private window, it is working; your own browser is just being stubborn.</li>
+      <li><strong>Hard reload first</strong> , Ctrl+Shift+R, or Cmd+Shift+R on Mac.</li>
+      <li><strong>Load the file directly</strong> , visit <code>yoursite.com/favicon.ico</code>. If the old icon appears there, it is a cache issue. If you get a 404, the file is in the wrong place.</li>
+      <li><strong>Try a private window</strong> , this bypasses the favicon cache entirely and shows you what a new visitor sees.</li>
+      <li><strong>Give it time</strong> , some browsers hold favicons for days regardless of what you do. If it works in a private window, it is working; your own browser is just being stubborn.</li>
     </ul>
 
   </article>
@@ -172,7 +176,7 @@
       </details>
       <details>
         <summary>Are my brand files uploaded anywhere?</summary>
-        <p>No. Everything is rendered and encoded in this browser tab. You can confirm it in the Network tab of developer tools — no request carries your image.</p>
+        <p>No. Everything is rendered and encoded in this browser tab. You can confirm it in the Network tab of developer tools , no request carries your image.</p>
       </details>
     </div>
   </section>
@@ -227,7 +231,7 @@
       plateCount.textContent=img.naturalWidth+'×'+img.naturalHeight+' source';
       go.disabled=false; clearBtn.disabled=false;
       if(Math.min(img.naturalWidth,img.naturalHeight)<512){
-        say('Source is under 512px — large icons will be upscaled and may look soft.');
+        say('Source is under 512px , large icons will be upscaled and may look soft.');
       } else { say('Ready to generate.'); }
     };
     img.onerror=function(){ say('Could not read that image. SVGs referencing external fonts sometimes fail.','err'); };
@@ -341,7 +345,7 @@
 
     go.disabled=false; zipBtn.disabled=false;
     plateCount.textContent = made.length + ' files generated';
-    say('Done — 7 files ready.','ok');
+    say('Done , 7 files ready.','ok');
   });
 
   function addRow(name,blob){
@@ -367,7 +371,7 @@
 
   copySnip.addEventListener('click',function(){
     navigator.clipboard.writeText(snip.value).then(function(){ say('HTML copied.','ok'); },
-      function(){ say('Copy blocked — select the text instead.','err'); });
+      function(){ say('Copy blocked , select the text instead.','err'); });
   });
 })();
 </script>

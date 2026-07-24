@@ -3,13 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Merge and split PDF in your browser — nothing uploaded</title>
+<title>Merge & split PDF - private, no upload | Local Convert</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 <meta name="description" content="Combine several PDFs into one, or pull out a page range, entirely in your browser. Contracts and scans never leave your device.">
 <link rel="canonical" href="https://local-convert.toptierrankers.workers.dev/pdf-tools.html">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Local Convert">
-<meta property="og:title" content="Merge and split PDF — no upload">
+<meta property="og:title" content="Merge and split PDF , no upload">
 <meta property="og:description" content="Combine or split PDF files in your browser. Documents never reach a server.">
 <meta property="og:url" content="https://local-convert.toptierrankers.workers.dev/pdf-tools.html">
 <meta name="twitter:card" content="summary_large_image">
@@ -36,7 +40,7 @@
 
   <p class="eyebrow">Documents</p>
   <h1>Merge and split PDF</h1>
-  <p class="lede">Combine several PDFs into one file, or pull out a range of pages. This is the tool where staying off a server matters most — the documents people convert are usually contracts, ID scans and bank statements.</p>
+  <p class="lede">Combine several PDFs into one file, or pull out a range of pages. This is the tool where staying off a server matters most , the documents people convert are usually contracts, ID scans and bank statements.</p>
 
   <div class="plate">
     <div class="plate-slot from">
@@ -56,7 +60,7 @@
 
   <label class="drop" id="drop">
     <div class="drop-title">Drop PDF files here</div>
-    <div class="drop-hint">click to choose — order matters when merging, so add them in sequence</div>
+    <div class="drop-hint">click to choose , order matters when merging, so add them in sequence</div>
     <input type="file" id="file" accept="application/pdf,.pdf" multiple>
   </label>
 
@@ -93,21 +97,21 @@
   <article class="prose">
 
     <h2>Why PDF is the worst format to hand to a stranger's server</h2>
-    <p>Think about what people actually merge and split. Signed contracts. Scanned passports for a visa application. Medical records. Bank statements for a mortgage. Tax paperwork. Almost nobody splits a PDF for fun — it is nearly always a document with consequences attached.</p>
+    <p>Think about what people actually merge and split. Signed contracts. Scanned passports for a visa application. Medical records. Bank statements for a mortgage. Tax paperwork. Almost nobody splits a PDF for fun , it is nearly always a document with consequences attached.</p>
     <p>The standard online PDF tool asks you to upload that file first. It then sits on infrastructure you cannot inspect, under a retention policy you have to take on faith, in a jurisdiction you probably did not check. Most of those services are honest. But the ones that were not have been the subject of enough breach reports that treating it as a non-issue is optimistic.</p>
     <p>The technical point worth understanding is that server-side processing is no longer necessary for this. PDF manipulation runs perfectly well in JavaScript. When a service still requires an upload for a merge operation, that is an architectural choice, not a technical constraint.</p>
 
     <h2>Merging: order is the whole game</h2>
-    <p>Merging concatenates documents in the order they are listed. The tool above uses the order you added the files, so if you drop in a folder, you inherit whatever order the operating system handed over — which is often alphabetical, and rarely what you wanted.</p>
+    <p>Merging concatenates documents in the order they are listed. The tool above uses the order you added the files, so if you drop in a folder, you inherit whatever order the operating system handed over , which is often alphabetical, and rarely what you wanted.</p>
     <p>For anything where sequence matters, add the files one at a time in the order you want them. It takes a few extra seconds and saves redoing the whole thing.</p>
-    <p>A useful habit for documents that get merged repeatedly, like monthly reports: name the source files with a leading number — <code>01-cover.pdf</code>, <code>02-summary.pdf</code>, <code>03-appendix.pdf</code>. Alphabetical then equals correct.</p>
+    <p>A useful habit for documents that get merged repeatedly, like monthly reports: name the source files with a leading number , <code>01-cover.pdf</code>, <code>02-summary.pdf</code>, <code>03-appendix.pdf</code>. Alphabetical then equals correct.</p>
 
     <h3>What carries over and what does not</h3>
-    <p>Merging preserves the pages themselves — text stays selectable, images stay embedded, and the pages keep their original dimensions. Some structural features do not survive:</p>
+    <p>Merging preserves the pages themselves , text stays selectable, images stay embedded, and the pages keep their original dimensions. Some structural features do not survive:</p>
     <ul>
       <li><strong>Bookmarks and outlines</strong> are generally lost, since each source file has its own tree and there is no unambiguous way to combine them.</li>
       <li><strong>Form fields</strong> can collide. Two documents each with a field named <code>signature</code> produce a conflict, and the result is unpredictable. Flatten forms before merging.</li>
-      <li><strong>Digital signatures break.</strong> This is by design, not a bug — a signature certifies one exact byte sequence, and merging changes it. If you need a signed document to stay verifiable, keep it separate.</li>
+      <li><strong>Digital signatures break.</strong> This is by design, not a bug , a signature certifies one exact byte sequence, and merging changes it. If you need a signed document to stay verifiable, keep it separate.</li>
     </ul>
 
     <h2>Splitting: how the page range works</h2>
@@ -121,15 +125,15 @@
 
     <h3>Splitting does not redact</h3>
     <p>This is worth being blunt about, because getting it wrong has ended careers. Removing a page removes that page. It does not remove sensitive content from pages you keep.</p>
-    <p>If your goal is to hide information rather than drop whole pages, drawing a black box over text in a PDF editor does not work either — the text is still in the file underneath, and anyone can select and copy it. Proper redaction requires a tool that deletes the underlying content, or, as a crude but reliable fallback, printing the page to an image and rebuilding the PDF from that.</p>
+    <p>If your goal is to hide information rather than drop whole pages, drawing a black box over text in a PDF editor does not work either , the text is still in the file underneath, and anyone can select and copy it. Proper redaction requires a tool that deletes the underlying content, or, as a crude but reliable fallback, printing the page to an image and rebuilding the PDF from that.</p>
 
     <h2>File size after merging</h2>
     <p>The output is roughly the sum of the inputs, occasionally a little smaller where identical resources get shared. Merging does not compress anything.</p>
-    <p>If the result is too large for an email attachment, the size is almost always coming from scanned pages — a scan is a full-page photograph, and at 600 DPI a single page can run several megabytes. The fix is to reduce the scan resolution before merging rather than to compress afterward. 300 DPI is plenty for text documents, and 200 is usually still legible.</p>
+    <p>If the result is too large for an email attachment, the size is almost always coming from scanned pages , a scan is a full-page photograph, and at 600 DPI a single page can run several megabytes. The fix is to reduce the scan resolution before merging rather than to compress afterward. 300 DPI is plenty for text documents, and 200 is usually still legible.</p>
 
     <h2>When a browser tool is the wrong choice</h2>
     <p>Everything here is held in memory, which sets a practical ceiling. A few hundred megabytes of PDF will make a desktop browser struggle and will likely crash a phone. Signs you have hit the limit are the tab freezing or the operation never completing.</p>
-    <p>For genuinely large jobs, or for batch work across hundreds of files, desktop software or a command line tool is the better answer. For the ordinary case — combining five documents into one attachment, pulling three pages out of a report — a browser handles it fine and without the upload.</p>
+    <p>For genuinely large jobs, or for batch work across hundreds of files, desktop software or a command line tool is the better answer. For the ordinary case , combining five documents into one attachment, pulling three pages out of a report , a browser handles it fine and without the upload.</p>
 
   </article>
 
@@ -138,7 +142,7 @@
     <div class="faq">
       <details>
         <summary>Are my documents uploaded to a server?</summary>
-        <p>No. The PDF is read and rewritten in this browser tab using JavaScript. You can verify it by opening developer tools, switching to the Network tab, and running a merge — no request carries your file.</p>
+        <p>No. The PDF is read and rewritten in this browser tab using JavaScript. You can verify it by opening developer tools, switching to the Network tab, and running a merge , no request carries your file.</p>
       </details>
       <details>
         <summary>Is there a file size limit?</summary>
@@ -258,7 +262,7 @@
         var outDoc = await PDFDocument.create();
         var totalPages=0;
         for(var i=0;i<files.length;i++){
-          say('Reading '+(i+1)+' of '+files.length+' — '+files[i].name);
+          say('Reading '+(i+1)+' of '+files.length+' , '+files[i].name);
           var bytes = await files[i].arrayBuffer();
           var doc = await PDFDocument.load(bytes,{ignoreEncryption:false});
           var pages = await outDoc.copyPages(doc, doc.getPageIndices());
