@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Are online HEIC converters safe? What to check | Local Convert</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="description" content="Whether online HEIC converters are safe depends on one thing: does the tool upload your photo to a server. Here is how to tell, and why it matters.">
+<link rel="canonical" href="https://local-convert.toptierrankers.workers.dev/are-online-heic-converters-safe.html">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Local Convert">
+<meta property="og:title" content="Are online HEIC converters safe?">
+<meta property="og:description" content="Whether online HEIC converters are safe depends on one thing: does the tool upload your photo to a server. Here is how to tell, and why it matters.">
+<meta property="og:url" content="https://local-convert.toptierrankers.workers.dev/are-online-heic-converters-safe.html">
+<meta name="theme-color" content="#1B1830">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="shell">
+
+  <header class="masthead">
+    <a class="wordmark" href="/">local<span>/</span>convert</a>
+    <nav>
+      <a href="/heic-to-jpg.html">HEIC</a>
+      <a href="/image-converter.html">Images</a>
+      <a href="/favicon-generator.html">Favicon</a>
+      <a href="/pdf-tools.html">PDF</a>
+      <a href="/csv-to-json.html">CSV</a>
+      <a href="/json-to-csv.html">JSON</a>
+    </nav>
+  </header>
+
+  <p class="eyebrow">Privacy</p>
+  <h1>Are online HEIC converters safe?</h1>
+  <p class="lede">It depends almost entirely on one question: does the converter upload your photo to a server, or convert it in your browser. The difference decides whether a copy of your photo ends up on hardware you do not control.</p>
+
+  <div class="btn-row" style="margin-bottom:8px">
+    <a class="btn btn-go" href="/heic-to-jpg.html" style="text-decoration:none">Use a no-upload converter →</a>
+  </div>
+
+  <article class="prose">
+    <h2>The one distinction that matters</h2>
+    <p>HEIC converters fall into two groups, and they are very different from a safety standpoint.</p>
+    <p><strong>Upload-based converters</strong> send your photo to their server, convert it there, and give you a download link. Your photo now exists on their infrastructure, for whatever retention period their policy specifies, in whatever jurisdiction they operate. Most are honest and delete promptly. Some do not, and breaches of exactly this kind of service have happened.</p>
+    <p><strong>Browser-based converters</strong> do the conversion in JavaScript inside your own tab. The photo never leaves your device. There is no server copy because the server was never involved in the conversion.</p>
+    <p>Both can call themselves "free online HEIC converters." Only one puts a copy of your photo on someone else's computer.</p>
+
+    <h2>Why it matters more for photos than you might think</h2>
+    <p>HEIC files straight from a phone carry EXIF metadata, and that metadata usually includes GPS coordinates precise to a few metres. A photo taken at home contains your home address in a form any software can read. Uploading a batch of personal photos to an unknown converter means handing over not just the images but a map of where they were taken.</p>
+    <p>For a screenshot of a receipt, nobody cares. For family photos, a passport scan, or anything personal, the upload is the part worth thinking about.</p>
+
+    <h2>How to check which kind you are using</h2>
+    <p>You do not have to trust anyone's marketing. Open your browser's developer tools by pressing F12, switch to the Network tab, and convert a file. Watch the list of requests:</p>
+    <ul>
+      <li>A browser tool shows the page's own files loading and then nothing, with no request carrying your photo out.</li>
+      <li>An upload tool shows a large outbound request as your file is sent to their server.</li>
+    </ul>
+    <p>Thirty seconds, and it tells you definitively what a privacy policy only claims.</p>
+
+    <h2>A safer default</h2>
+    <p>When the choice exists, prefer a converter that runs in the browser. The <a href="/heic-to-jpg.html">HEIC to JPG tool here</a> is built that way deliberately. It never uploads, and you can verify that with the Network tab check above. For sensitive images it is the difference between a private operation on your own machine and a copy of your photo sitting on a stranger's server.</p>
+  </article>
+
+  <section class="prose">
+    <h2>Questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Are online HEIC converters safe to use?</summary>
+        <p>It depends on whether the converter uploads your photo. Browser-based tools convert locally and never upload, which is safe. Upload-based tools place a copy of your photo on their server, which carries more risk.</p>
+      </details>
+      <details>
+        <summary>How can I tell if a converter uploads my photo?</summary>
+        <p>Open developer tools, go to the Network tab, and convert a file. A browser tool sends nothing out. An upload tool shows your file being transmitted to a server.</p>
+      </details>
+      <details>
+        <summary>Why is uploading a HEIC photo a privacy concern?</summary>
+        <p>HEIC files carry EXIF metadata including GPS coordinates, so uploading personal photos can reveal where they were taken. A browser-based converter avoids this by never sending the file anywhere.</p>
+      </details>
+      <details>
+        <summary>Do HEIC files really contain my location?</summary>
+        <p>Usually yes, if location was enabled when the photo was taken. The GPS coordinates are embedded in the file EXIF metadata and are readable by ordinary software.</p>
+      </details>
+      <details>
+        <summary>Which is safer, an app or a browser converter?</summary>
+        <p>A browser converter that runs locally never uploads and installs nothing, which is generally the safest option. A reputable offline app is also safe. The risk lies with online tools that upload to a server.</p>
+      </details>
+    </div>
+  </section>
+
+  <footer>
+    <a href="/">All tools</a>
+    <a href="/heic-to-jpg.html">HEIC to JPG</a>
+    <a href="/image-converter.html">Image converter</a>
+    <a href="/pdf-tools.html">PDF tools</a>
+  </footer>
+
+</div>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Are online HEIC converters safe to use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It depends on whether the converter uploads your photo. Browser-based tools convert locally and never upload, which is safe. Upload-based tools place a copy of your photo on their server, which carries more risk."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I tell if a converter uploads my photo?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Open developer tools, go to the Network tab, and convert a file. A browser tool sends nothing out. An upload tool shows your file being transmitted to a server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is uploading a HEIC photo a privacy concern?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "HEIC files carry EXIF metadata including GPS coordinates, so uploading personal photos can reveal where they were taken. A browser-based converter avoids this by never sending the file anywhere."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do HEIC files really contain my location?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Usually yes, if location was enabled when the photo was taken. The GPS coordinates are embedded in the file EXIF metadata and are readable by ordinary software."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which is safer, an app or a browser converter?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A browser converter that runs locally never uploads and installs nothing, which is generally the safest option. A reputable offline app is also safe. The risk lies with online tools that upload to a server."
+      }
+    }
+  ]
+}
+</script>
+</body>
+</html>

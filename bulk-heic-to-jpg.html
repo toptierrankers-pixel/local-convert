@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bulk HEIC to JPG — convert a whole camera roll free | Local Convert</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="description" content="Convert a whole folder of HEIC photos to JPG at once and download them as a zip. Runs in your browser with no upload and no file limit.">
+<link rel="canonical" href="https://local-convert.toptierrankers.workers.dev/bulk-heic-to-jpg.html">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Local Convert">
+<meta property="og:title" content="Bulk HEIC to JPG converter">
+<meta property="og:description" content="Convert a whole folder of HEIC photos to JPG at once and download them as a zip. Runs in your browser with no upload and no file limit.">
+<meta property="og:url" content="https://local-convert.toptierrankers.workers.dev/bulk-heic-to-jpg.html">
+<meta name="theme-color" content="#1B1830">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="shell">
+
+  <header class="masthead">
+    <a class="wordmark" href="/">local<span>/</span>convert</a>
+    <nav>
+      <a href="/heic-to-jpg.html">HEIC</a>
+      <a href="/image-converter.html">Images</a>
+      <a href="/favicon-generator.html">Favicon</a>
+      <a href="/pdf-tools.html">PDF</a>
+      <a href="/csv-to-json.html">CSV</a>
+      <a href="/json-to-csv.html">JSON</a>
+    </nav>
+  </header>
+
+  <p class="eyebrow">Batch</p>
+  <h1>Bulk HEIC to JPG</h1>
+  <p class="lede">Converting one photo at a time is fine for one photo. For a camera roll, you want to drop the whole folder in at once and get a zip back. Here is how, and what to watch for with large batches.</p>
+
+  <div class="btn-row" style="margin-bottom:8px">
+    <a class="btn btn-go" href="/heic-to-jpg.html" style="text-decoration:none">Convert in bulk →</a>
+  </div>
+
+  <article class="prose">
+    <h2>Converting a whole folder at once</h2>
+    <p>The <a href="/heic-to-jpg.html">HEIC to JPG converter</a> takes as many files as you drop on it. Select an entire folder of photos, drag them in, convert, and download everything as a single zip rather than clicking through file by file. Format and quality apply to the whole batch.</p>
+    <p>Because it runs in the browser, there is no per-file upload waiting time. The bottleneck is only how fast your own device can decode, which for a modern laptop is a few images per second.</p>
+
+    <h2>Working with large batches sensibly</h2>
+    <p>There is a practical ceiling, and it is memory rather than any imposed limit. Every converted image is held in the tab until you download and clear. A few hundred large photos at once can exhaust a browser's memory and freeze the tab.</p>
+    <p>The reliable approach for a very large library:</p>
+    <ul>
+      <li>Work in batches of roughly fifty on a laptop, fewer on a phone.</li>
+      <li>Download the zip after each batch, then clear the page before loading the next.</li>
+      <li>If the tab becomes unresponsive, it has hit the memory ceiling. The earlier files are still fine to download, so grab those, clear, and continue.</li>
+    </ul>
+
+    <h2>A note on metadata across a batch</h2>
+    <p>Conversion strips EXIF data, so the JPGs will not carry the original capture dates. For a camera roll this matters: your photo library sorts by date, and converted files may all cluster under the conversion date instead. If preserving the timeline matters, keep the HEIC originals alongside the JPGs rather than deleting them.</p>
+    <p>On the other hand, if you are converting a batch specifically to share or upload somewhere public, stripping the GPS coordinates from every file is a privacy benefit that happens automatically.</p>
+  </article>
+
+  <section class="prose">
+    <h2>Questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Can I convert a whole folder of HEIC photos at once?</summary>
+        <p>Yes. Drag the entire folder onto the converter, convert, and download everything as a single zip. Format and quality settings apply to the whole batch.</p>
+      </details>
+      <details>
+        <summary>Is there a limit on how many HEIC files I can convert?</summary>
+        <p>No fixed limit, but each converted image stays in browser memory until downloaded. Work in batches of around fifty on a laptop to avoid exhausting memory.</p>
+      </details>
+      <details>
+        <summary>Do I get the photos back as a zip?</summary>
+        <p>Yes. When you convert more than one file, a Download all as zip option lets you grab the whole batch in one file rather than one at a time.</p>
+      </details>
+      <details>
+        <summary>Will bulk conversion keep my photo dates?</summary>
+        <p>No. EXIF metadata including capture date is stripped during conversion, so keep the HEIC originals if your photo library needs to sort by the original dates.</p>
+      </details>
+      <details>
+        <summary>What happens if the browser freezes mid-batch?</summary>
+        <p>It has hit its memory ceiling, not crashed. Download the files that already converted, clear the page, and continue with the rest in a smaller batch.</p>
+      </details>
+    </div>
+  </section>
+
+  <footer>
+    <a href="/">All tools</a>
+    <a href="/heic-to-jpg.html">HEIC to JPG</a>
+    <a href="/image-converter.html">Image converter</a>
+    <a href="/pdf-tools.html">PDF tools</a>
+  </footer>
+
+</div>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Can I convert a whole folder of HEIC photos at once?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Drag the entire folder onto the converter, convert, and download everything as a single zip. Format and quality settings apply to the whole batch."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is there a limit on how many HEIC files I can convert?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No fixed limit, but each converted image stays in browser memory until downloaded. Work in batches of around fifty on a laptop to avoid exhausting memory."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I get the photos back as a zip?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. When you convert more than one file, a Download all as zip option lets you grab the whole batch in one file rather than one at a time."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will bulk conversion keep my photo dates?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. EXIF metadata including capture date is stripped during conversion, so keep the HEIC originals if your photo library needs to sort by the original dates."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if the browser freezes mid-batch?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It has hit its memory ceiling, not crashed. Download the files that already converted, clear the page, and continue with the rest in a smaller batch."
+      }
+    }
+  ]
+}
+</script>
+</body>
+</html>
