@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Local Convert — file conversion that never uploads your files</title>
+<meta name="description" content="Convert HEIC, images and CSV entirely in your browser. Files never leave your device, so there is nothing to upload and nothing stored on a server.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="shell">
+
+  <header class="masthead">
+    <div class="wordmark">local<span>/</span>convert</div>
+    <nav>
+      <a href="/heic-to-jpg.html">HEIC → JPG</a>
+      <a href="/image-converter.html">Images</a>
+      <a href="/csv-to-json.html">CSV → JSON</a>
+    </nav>
+  </header>
+
+  <p class="eyebrow">Nothing uploads</p>
+  <h1>Your files convert on your own machine.</h1>
+  <p class="lede">Every tool here runs in the browser tab you already have open. No account, no upload, no server copy, no queue. Close the tab and the file is gone.</p>
+
+  <div class="tool-grid">
+
+    <a class="tool-card" href="/heic-to-jpg.html">
+      <div class="pair">HEIC → JPG</div>
+      <h2>iPhone photo converter</h2>
+      <p>Turn HEIC and HEIF photos into JPG or PNG that anything can open. Handles a whole camera roll at once.</p>
+    </a>
+
+    <a class="tool-card" href="/image-converter.html">
+      <div class="pair">PNG · JPG · WEBP</div>
+      <h2>Bulk image converter</h2>
+      <p>Convert between PNG, JPG and WebP, set quality, and cap the longest edge. Drop in a hundred files and download a zip.</p>
+    </a>
+
+    <a class="tool-card" href="/csv-to-json.html">
+      <div class="pair">CSV → JSON</div>
+      <h2>CSV to nested JSON</h2>
+      <p>Dotted headers like <code>user.address.city</code> become real nested objects. Quoted fields and embedded commas handled properly.</p>
+    </a>
+
+    <span class="tool-card soon">
+      <div class="pair">SVG → ICO</div>
+      <h2>Favicon set builder</h2>
+      <p>Coming next: one SVG in, every size and the manifest out.</p>
+    </span>
+
+  </div>
+
+  <div class="privacy">
+    <p><strong>Why this matters.</strong> Most converters ask you to upload the file to their server first. That means a copy of your document, your ID scan or your customer spreadsheet sits on someone else's disk. These tools never make that copy — the conversion happens in JavaScript on your device, and you can check by opening your browser's network tab while you use them.</p>
+  </div>
+
+  <footer>
+    <span>Local Convert</span>
+    <a href="/heic-to-jpg.html">HEIC</a>
+    <a href="/image-converter.html">Images</a>
+    <a href="/csv-to-json.html">CSV</a>
+  </footer>
+
+</div>
+</body>
+</html>

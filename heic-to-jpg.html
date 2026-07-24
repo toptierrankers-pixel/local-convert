@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HEIC to JPG converter — runs in your browser, no upload</title>
+<meta name="description" content="Convert iPhone HEIC and HEIF photos to JPG or PNG in bulk. Runs entirely in your browser, so photos are never uploaded to a server.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="shell">
+
+  <header class="masthead">
+    <a class="wordmark" href="/">local<span>/</span>convert</a>
+    <nav>
+      <a href="/heic-to-jpg.html" aria-current="page">HEIC → JPG</a>
+      <a href="/image-converter.html">Images</a>
+      <a href="/csv-to-json.html">CSV → JSON</a>
+    </nav>
+  </header>
+
+  <p class="eyebrow">iPhone photos</p>
+  <h1>HEIC to JPG</h1>
+  <p class="lede">Your iPhone saves photos as HEIC, which Windows, older software and most websites can't open. Convert them here and they stay on your device the whole time.</p>
+
+  <div class="plate">
+    <div class="plate-slot from">
+      <span class="plate-label">From</span>
+      <span class="plate-value">HEIC</span>
+    </div>
+    <div class="plate-arrow">→</div>
+    <div class="plate-slot to">
+      <span class="plate-label">To</span>
+      <span class="plate-value" id="plateTo">JPG</span>
+    </div>
+    <div class="plate-meta">
+      <span id="plateCount">No files yet</span><br>
+      <span>Converted on this device</span>
+    </div>
+  </div>
+
+  <label class="drop" id="drop">
+    <div class="drop-title">Drop HEIC photos here</div>
+    <div class="drop-hint">or click to choose — .heic and .heif, as many as you like</div>
+    <input type="file" id="file" accept=".heic,.heif,image/heic,image/heif" multiple>
+  </label>
+
+  <div class="controls">
+    <div class="field">
+      <label for="fmt">Output format</label>
+      <select id="fmt">
+        <option value="image/jpeg">JPG</option>
+        <option value="image/png">PNG</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="q">Quality</label>
+      <input type="range" id="q" min="40" max="100" value="88">
+      <span class="readout" id="qOut">88%</span>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-go" id="go" disabled>Convert</button>
+    <button class="btn btn-quiet" id="zip" disabled>Download all as zip</button>
+    <button class="btn btn-quiet" id="clear" disabled>Clear</button>
+  </div>
+
+  <p class="status" id="status"></p>
+  <div class="results" id="results"></div>
+
+  <div class="privacy">
+    <p><strong>Nothing is uploaded.</strong> The decoder runs as JavaScript inside this page. Open your browser's network tab while converting and you'll see no file leaving your machine.</p>
+  </div>
+
+  <footer>
+    <a href="/">All tools</a>
+    <a href="/image-converter.html">Bulk image converter</a>
+    <a href="/csv-to-json.html">CSV to JSON</a>
+  </footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script>
+(function(){
+  var files = [], made = [];
+  var drop=document.getElementById('drop'), input=document.getElementById('file'),
+      fmt=document.getElementById('fmt'), q=document.getElementById('q'),
+      qOut=document.getElementById('qOut'), go=document.getElementById('go'),
+      zipBtn=document.getElementById('zip'), clearBtn=document.getElementById('clear'),
+      status=document.getElementById('status'), results=document.getElementById('results'),
+      plateTo=document.getElementById('plateTo'), plateCount=document.getElementById('plateCount');
+
+  function say(msg, kind){ status.textContent = msg; status.className = 'status ' + (kind||''); }
+  function kb(n){ return n<1024*1024 ? (n/1024).toFixed(0)+' KB' : (n/1048576).toFixed(2)+' MB'; }
+
+  q.addEventListener('input', function(){ qOut.textContent = q.value + '%'; });
+  fmt.addEventListener('change', function(){
+    plateTo.textContent = fmt.value === 'image/png' ? 'PNG' : 'JPG';
+    q.disabled = fmt.value === 'image/png';
+  });
+
+  ['dragenter','dragover'].forEach(function(e){
+    drop.addEventListener(e, function(ev){ ev.preventDefault(); drop.classList.add('hot'); });
+  });
+  ['dragleave','drop'].forEach(function(e){
+    drop.addEventListener(e, function(ev){ ev.preventDefault(); drop.classList.remove('hot'); });
+  });
+  drop.addEventListener('drop', function(ev){ take(ev.dataTransfer.files); });
+  input.addEventListener('change', function(){ take(input.files); });
+
+  function take(list){
+    var incoming = Array.prototype.slice.call(list).filter(function(f){
+      return /\.hei[cf]$/i.test(f.name) || /hei[cf]/i.test(f.type);
+    });
+    if(!incoming.length){ say('Those files are not HEIC or HEIF. Pick photos ending in .heic or .heif.','err'); return; }
+    files = files.concat(incoming);
+    plateCount.textContent = files.length + (files.length===1?' photo ready':' photos ready');
+    go.disabled = false; clearBtn.disabled = false;
+    say(files.length + ' ready to convert.');
+  }
+
+  clearBtn.addEventListener('click', function(){
+    files=[]; made=[]; results.innerHTML=''; input.value='';
+    plateCount.textContent='No files yet';
+    go.disabled=true; zipBtn.disabled=true; clearBtn.disabled=true;
+    say('');
+  });
+
+  go.addEventListener('click', async function(){
+    if(!files.length) return;
+    go.disabled = true; zipBtn.disabled = true;
+    results.innerHTML=''; made=[];
+    var type = fmt.value, quality = parseInt(q.value,10)/100;
+    var ext = type === 'image/png' ? 'png' : 'jpg';
+
+    for(var i=0;i<files.length;i++){
+      var f = files[i];
+      say('Converting ' + (i+1) + ' of ' + files.length + ' — ' + f.name);
+      try{
+        var out = await heic2any({ blob:f, toType:type, quality:quality });
+        if(Array.isArray(out)) out = out[0];
+        var name = f.name.replace(/\.hei[cf]$/i,'') + '.' + ext;
+        made.push({ name:name, blob:out });
+        addRow(name, out);
+      }catch(err){
+        addFail(f.name);
+      }
+    }
+    go.disabled = false;
+    zipBtn.disabled = made.length < 2;
+    if(made.length) say('Done — ' + made.length + ' of ' + files.length + ' converted.','ok');
+    else say('None of those could be decoded. They may not be real HEIC files.','err');
+  });
+
+  function addRow(name, blob){
+    var url = URL.createObjectURL(blob);
+    var row = document.createElement('div');
+    row.className = 'result-row';
+    var n = document.createElement('span'); n.className='result-name'; n.textContent=name;
+    var s = document.createElement('span'); s.className='result-size'; s.textContent=kb(blob.size);
+    var a = document.createElement('a'); a.href=url; a.download=name; a.textContent='Download';
+    row.appendChild(n); row.appendChild(s); row.appendChild(a);
+    results.appendChild(row);
+  }
+
+  function addFail(name){
+    var row = document.createElement('div');
+    row.className = 'result-row';
+    var n = document.createElement('span'); n.className='result-name'; n.textContent=name;
+    var s = document.createElement('span'); s.className='result-size'; s.style.color='var(--pink)'; s.textContent='Could not decode';
+    row.appendChild(n); row.appendChild(s);
+    results.appendChild(row);
+  }
+
+  zipBtn.addEventListener('click', async function(){
+    if(made.length<2) return;
+    zipBtn.disabled = true; say('Building zip…');
+    var zip = new JSZip();
+    made.forEach(function(m){ zip.file(m.name, m.blob); });
+    var blob = await zip.generateAsync({type:'blob'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'converted-photos.zip';
+    a.click();
+    zipBtn.disabled = false; say('Zip ready.','ok');
+  });
+})();
+</script>
+</body>
+</html>

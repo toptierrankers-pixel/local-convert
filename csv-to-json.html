@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CSV to JSON with nested objects — converts in your browser</title>
+<meta name="description" content="Convert CSV to JSON in the browser, including dotted headers like user.address.city that become real nested objects. Handles quoted fields and embedded commas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="shell">
+
+  <header class="masthead">
+    <a class="wordmark" href="/">local<span>/</span>convert</a>
+    <nav>
+      <a href="/heic-to-jpg.html">HEIC → JPG</a>
+      <a href="/image-converter.html">Images</a>
+      <a href="/csv-to-json.html" aria-current="page">CSV → JSON</a>
+    </nav>
+  </header>
+
+  <p class="eyebrow">Structured output</p>
+  <h1>CSV to nested JSON</h1>
+  <p class="lede">Most converters flatten everything into one level. This one reads dotted headers — a column called <code>address.city</code> becomes a real nested object, and <code>tags[]</code> becomes an array.</p>
+
+  <div class="plate">
+    <div class="plate-slot from">
+      <span class="plate-label">From</span>
+      <span class="plate-value">CSV</span>
+    </div>
+    <div class="plate-arrow">→</div>
+    <div class="plate-slot to">
+      <span class="plate-label">To</span>
+      <span class="plate-value">JSON</span>
+    </div>
+    <div class="plate-meta">
+      <span id="plateCount">No data yet</span><br>
+      <span>Parsed on this device</span>
+    </div>
+  </div>
+
+  <label class="drop" id="drop">
+    <div class="drop-title">Drop a CSV file here</div>
+    <div class="drop-hint">or click to choose — or just paste into the box below</div>
+    <input type="file" id="file" accept=".csv,.tsv,.txt,text/csv" >
+  </label>
+
+  <div class="controls">
+    <div class="field">
+      <label for="delim">Delimiter</label>
+      <select id="delim">
+        <option value="auto">Detect automatically</option>
+        <option value=",">Comma</option>
+        <option value=";">Semicolon</option>
+        <option value="&#9;">Tab</option>
+        <option value="|">Pipe</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="indent">Indent</label>
+      <select id="indent">
+        <option value="2">2 spaces</option>
+        <option value="4">4 spaces</option>
+        <option value="0">Minified</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Parsing</label>
+      <div class="checkline">
+        <input type="checkbox" id="nest" checked>
+        <label for="nest">Expand dotted headers into objects</label>
+      </div>
+      <div class="checkline">
+        <input type="checkbox" id="types" checked>
+        <label for="types">Detect numbers, booleans and empty values</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="field" style="margin-bottom:20px">
+    <label for="src">CSV input</label>
+    <textarea class="output" id="src" spellcheck="false" placeholder="name,address.city,address.zip,tags[]&#10;Ada,Lisbon,1100,founder;engineer&#10;Grace,Austin,73301,advisor"></textarea>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-go" id="go">Convert to JSON</button>
+    <button class="btn btn-quiet" id="copy" disabled>Copy JSON</button>
+    <button class="btn btn-quiet" id="dl" disabled>Download .json</button>
+    <button class="btn btn-quiet" id="clear">Clear</button>
+  </div>
+
+  <p class="status" id="status"></p>
+
+  <div class="field" style="margin-top:24px">
+    <label for="out">JSON output</label>
+    <textarea class="output" id="out" spellcheck="false" readonly></textarea>
+  </div>
+
+  <div class="privacy">
+    <p><strong>Nothing is uploaded.</strong> This matters more for spreadsheets than for photos — CSV exports usually hold customer names, emails and order data. Parsing happens in this tab and the data never reaches a server.</p>
+  </div>
+
+  <div class="privacy" style="border-left-color:var(--pink)">
+    <p><strong>Header syntax.</strong> Use <code>a.b</code> for nesting, and end a header with <code>[]</code> to split that cell into an array on semicolons. A header of <code>tags[]</code> holding <code>founder;engineer</code> becomes <code>["founder","engineer"]</code>.</p>
+  </div>
+
+  <footer>
+    <a href="/">All tools</a>
+    <a href="/heic-to-jpg.html">HEIC to JPG</a>
+    <a href="/image-converter.html">Bulk image converter</a>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var drop=document.getElementById('drop'), input=document.getElementById('file'),
+      src=document.getElementById('src'), out=document.getElementById('out'),
+      delim=document.getElementById('delim'), indent=document.getElementById('indent'),
+      nest=document.getElementById('nest'), types=document.getElementById('types'),
+      go=document.getElementById('go'), copy=document.getElementById('copy'),
+      dl=document.getElementById('dl'), clearBtn=document.getElementById('clear'),
+      status=document.getElementById('status'), plateCount=document.getElementById('plateCount');
+
+  function say(m,k){ status.textContent=m; status.className='status '+(k||''); }
+
+  ['dragenter','dragover'].forEach(function(e){
+    drop.addEventListener(e,function(ev){ ev.preventDefault(); drop.classList.add('hot'); });
+  });
+  ['dragleave','drop'].forEach(function(e){
+    drop.addEventListener(e,function(ev){ ev.preventDefault(); drop.classList.remove('hot'); });
+  });
+  drop.addEventListener('drop',function(ev){
+    var f=ev.dataTransfer.files[0]; if(f) read(f);
+  });
+  input.addEventListener('change',function(){ if(input.files[0]) read(input.files[0]); });
+
+  function read(f){
+    var r=new FileReader();
+    r.onload=function(){ src.value=r.result; say('Loaded '+f.name+'.'); convert(); };
+    r.onerror=function(){ say('Could not read that file.','err'); };
+    r.readAsText(f);
+  }
+
+  // RFC 4180 style parser: handles quoted fields, embedded delimiters and newlines
+  function parseCSV(text, d){
+    var rows=[], row=[], field='', inQuotes=false, i=0;
+    text = text.replace(/^\uFEFF/,'').replace(/\r\n/g,'\n').replace(/\r/g,'\n');
+    while(i < text.length){
+      var ch = text[i];
+      if(inQuotes){
+        if(ch === '"'){
+          if(text[i+1] === '"'){ field += '"'; i += 2; continue; }
+          inQuotes = false; i++; continue;
+        }
+        field += ch; i++; continue;
+      }
+      if(ch === '"'){ inQuotes = true; i++; continue; }
+      if(ch === d){ row.push(field); field=''; i++; continue; }
+      if(ch === '\n'){ row.push(field); rows.push(row); row=[]; field=''; i++; continue; }
+      field += ch; i++;
+    }
+    if(field.length || row.length){ row.push(field); rows.push(row); }
+    return rows.filter(function(r){ return r.some(function(c){ return c.trim() !== ''; }); });
+  }
+
+  function detectDelim(text){
+    var line = text.split('\n')[0] || '';
+    var best = ',', bestCount = -1;
+    [',',';','\t','|'].forEach(function(d){
+      var count = line.split(d).length - 1;
+      if(count > bestCount){ bestCount = count; best = d; }
+    });
+    return best;
+  }
+
+  function coerce(v){
+    if(!types.checked) return v;
+    var t = v.trim();
+    if(t === '') return null;
+    if(/^(true|yes)$/i.test(t)) return true;
+    if(/^(false|no)$/i.test(t)) return false;
+    if(/^-?\d+$/.test(t)){
+      var n = parseInt(t,10);
+      return String(n) === t ? n : v;
+    }
+    if(/^-?\d*\.\d+$/.test(t)) return parseFloat(t);
+    return v;
+  }
+
+  function assign(obj, path, value){
+    var parts = path.split('.');
+    var cur = obj;
+    for(var i=0;i<parts.length-1;i++){
+      var k = parts[i];
+      if(typeof cur[k] !== 'object' || cur[k] === null) cur[k] = {};
+      cur = cur[k];
+    }
+    cur[parts[parts.length-1]] = value;
+  }
+
+  function convert(){
+    var text = src.value;
+    if(!text.trim()){ say('Paste some CSV or drop a file first.','err'); return; }
+    var d = delim.value === 'auto' ? detectDelim(text) : delim.value;
+    var rows = parseCSV(text, d);
+    if(rows.length < 2){ say('Need a header row and at least one data row.','err'); return; }
+
+    var headers = rows[0].map(function(h){ return h.trim(); });
+    var data = [];
+
+    for(var r=1;r<rows.length;r++){
+      var obj = {};
+      for(var c=0;c<headers.length;c++){
+        var head = headers[c];
+        if(!head) continue;
+        var raw = rows[r][c] === undefined ? '' : rows[r][c];
+        var isArray = /\[\]$/.test(head);
+        var key = isArray ? head.slice(0,-2) : head;
+        var value;
+        if(isArray){
+          value = raw.trim() === '' ? [] : raw.split(';').map(function(p){ return coerce(p.trim()); });
+        } else {
+          value = coerce(raw);
+        }
+        if(nest.checked && key.indexOf('.') > -1) assign(obj, key, value);
+        else obj[key] = value;
+      }
+      data.push(obj);
+    }
+
+    var sp = parseInt(indent.value,10);
+    out.value = JSON.stringify(data, null, sp);
+    plateCount.textContent = data.length + (data.length===1?' record':' records') + ' · ' + headers.length + ' columns';
+    copy.disabled = false; dl.disabled = false;
+    say('Converted ' + data.length + ' rows.','ok');
+  }
+
+  go.addEventListener('click', convert);
+
+  copy.addEventListener('click', function(){
+    navigator.clipboard.writeText(out.value).then(function(){ say('JSON copied.','ok'); },
+      function(){ say('Copy blocked by the browser — select the text instead.','err'); });
+  });
+
+  dl.addEventListener('click', function(){
+    var blob = new Blob([out.value], {type:'application/json'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'data.json'; a.click();
+  });
+
+  clearBtn.addEventListener('click', function(){
+    src.value=''; out.value=''; input.value='';
+    plateCount.textContent='No data yet';
+    copy.disabled=true; dl.disabled=true; say('');
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+
+# When you add an ffmpeg.wasm tool later, put it under /video/ and
+# uncomment these two lines. They enable SharedArrayBuffer, which
+# ffmpeg.wasm requires. Do NOT apply them site-wide — require-corp
+# will block CDN scripts that lack CORP headers.
+#
+# /video/*
+#   Cross-Origin-Opener-Policy: same-origin
+#   Cross-Origin-Embedder-Policy: require-corp
