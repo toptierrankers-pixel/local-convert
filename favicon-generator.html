@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Favicon generator — every size plus the manifest, in your browser</title>
+<meta name="description" content="Turn one image into a complete favicon set: favicon.ico, Apple touch icon, Android icons, site.webmanifest and the HTML to paste. Runs in your browser with no upload.">
+<link rel="canonical" href="https://local-convert.toptierrankers.workers.dev/favicon-generator.html">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Local Convert">
+<meta property="og:title" content="Favicon generator — every size, no upload">
+<meta property="og:description" content="One image in, a complete favicon set out: .ico, Apple touch icon, Android icons, manifest and the HTML snippet.">
+<meta property="og:url" content="https://local-convert.toptierrankers.workers.dev/favicon-generator.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#1B1830">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="shell">
+
+  <header class="masthead">
+    <a class="wordmark" href="/">local<span>/</span>convert</a>
+    <nav>
+      <a href="/heic-to-jpg.html">HEIC</a>
+      <a href="/image-converter.html">Images</a>
+      <a href="/favicon-generator.html" aria-current="page">Favicon</a>
+      <a href="/pdf-tools.html">PDF</a>
+      <a href="/csv-to-json.html">CSV</a>
+      <a href="/json-to-csv.html">JSON</a>
+    </nav>
+  </header>
+
+  <p class="eyebrow">Web icons</p>
+  <h1>Favicon generator</h1>
+  <p class="lede">One image in, the whole set out — <code>favicon.ico</code> with three resolutions inside it, the Apple touch icon, Android icons, a web manifest, and the HTML to paste into your head.</p>
+
+  <div class="plate">
+    <div class="plate-slot from">
+      <span class="plate-label">From</span>
+      <span class="plate-value" id="plateFrom">PNG</span>
+    </div>
+    <div class="plate-arrow">→</div>
+    <div class="plate-slot to">
+      <span class="plate-label">To</span>
+      <span class="plate-value">SET</span>
+    </div>
+    <div class="plate-meta">
+      <span id="plateCount">No image yet</span><br>
+      <span>Generated on this device</span>
+    </div>
+  </div>
+
+  <label class="drop" id="drop">
+    <div class="drop-title">Drop your icon here</div>
+    <div class="drop-hint">SVG, PNG or JPG — square works best, 512px or larger</div>
+    <input type="file" id="file" accept="image/png,image/jpeg,image/svg+xml,image/webp">
+  </label>
+
+  <div class="controls">
+    <div class="field">
+      <label for="bg">Background</label>
+      <select id="bg">
+        <option value="transparent">Keep transparent</option>
+        <option value="#ffffff">White</option>
+        <option value="custom">Custom colour</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="hex">Custom colour</label>
+      <input type="text" id="hex" value="#1B1830" placeholder="#1B1830" disabled>
+    </div>
+    <div class="field">
+      <label for="pad">Padding</label>
+      <input type="range" id="pad" min="0" max="25" value="0">
+      <span class="readout" id="padOut">0%</span>
+    </div>
+    <div class="field">
+      <label for="name">App name (for manifest)</label>
+      <input type="text" id="name" placeholder="My Site">
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-go" id="go" disabled>Generate favicon set</button>
+    <button class="btn btn-quiet" id="zip" disabled>Download all as zip</button>
+    <button class="btn btn-quiet" id="clear" disabled>Clear</button>
+  </div>
+
+  <p class="status" id="status"></p>
+  <div class="results" id="results"></div>
+
+  <div class="field" id="snipWrap" style="margin-top:28px;display:none">
+    <label for="snip">Paste this into your &lt;head&gt;</label>
+    <textarea class="output" id="snip" spellcheck="false" readonly style="min-height:170px"></textarea>
+    <div class="btn-row" style="margin-top:12px">
+      <button class="btn btn-quiet" id="copySnip">Copy HTML</button>
+    </div>
+  </div>
+
+  <div class="privacy">
+    <p><strong>Nothing is uploaded.</strong> Your logo is rendered to a canvas and encoded in this tab. Brand assets that are not public yet stay off other people's servers.</p>
+  </div>
+
+  <article class="prose">
+
+    <h2>What a favicon set actually needs in 2026</h2>
+    <p>Favicons accumulated a lot of cruft over two decades. At one point the recommended set ran to more than twenty files, covering Windows tile icons, a dozen Apple device resolutions, and formats for browsers that no longer exist. Most of that is now dead weight.</p>
+    <p>The set this tool produces is the modern minimum that still covers everything with real usage:</p>
+    <ul>
+      <li><code>favicon.ico</code> — 16, 32 and 48 pixel versions bundled in one file. Still needed because browsers request it from the site root whether you reference it or not, and because it is what appears in bookmark lists and some address bars.</li>
+      <li><code>favicon-32.png</code> and <code>favicon-16.png</code> — what modern browsers actually display in the tab.</li>
+      <li><code>apple-touch-icon.png</code> at 180×180 — used when someone adds your site to an iOS home screen. iOS ignores the ICO entirely.</li>
+      <li><code>icon-192.png</code> and <code>icon-512.png</code> — Android home screen and the PWA install prompt. The 512 is also what gets used in app switchers and splash screens.</li>
+      <li><code>site.webmanifest</code> — tells Android which icons to use and what to call the app.</li>
+    </ul>
+    <p>Six image files and one JSON file. That covers Chrome, Safari, Firefox, Edge, iOS, and Android without carrying files nothing requests.</p>
+
+    <h2>Why the .ico file contains three images</h2>
+    <p>ICO is a container format, not a single image. One <code>.ico</code> can hold several resolutions, and the operating system or browser picks whichever fits the context it is drawing into. A browser tab wants 16px. A bookmark bar might want 32. A Windows desktop shortcut reaches for 48.</p>
+    <p>If you only supply a single large image and let the browser scale it down, small sizes come out muddy — downscaling a detailed 512px logo to 16px by algorithm produces a grey smear. Generating each size separately means each one is encoded from the source at its target dimensions, which is noticeably sharper at the sizes that matter most.</p>
+
+    <h3>Design for 16 pixels, not for 512</h3>
+    <p>This is the mistake almost everyone makes. A logo that looks great on a business card usually fails completely at 16×16, because at that size you have roughly the detail budget of a single letterform. Wordmarks become illegible. Thin strokes disappear. Gradients turn into flat mud.</p>
+    <p>What survives: a single bold letter, a simple geometric mark, high contrast between subject and background. Generate the set, then look at the 16px preview at actual size. If you cannot tell what it is, simplify the source image rather than accepting the result.</p>
+
+    <h2>SVG source versus PNG source</h2>
+    <p>Feeding in an SVG generally gives sharper results, because each size is rasterised from vector geometry at its target resolution rather than resampled from a fixed grid of pixels. If you have the original vector, use it.</p>
+    <p>Two caveats. SVGs referencing external fonts will render with fallback fonts, since the font is not embedded — convert text to outlines first. And SVGs relying on CSS defined outside the file itself will lose that styling.</p>
+    <p>If you only have a PNG, start from at least 512×512. Upscaling a 64px logo produces a soft 512 icon and there is no recovering detail that was never captured.</p>
+
+    <h2>Where the files go</h2>
+    <p>Put all six images and the manifest in your site root — the same folder as <code>index.html</code>. The root matters specifically for <code>favicon.ico</code>, because browsers request <code>/favicon.ico</code> directly regardless of what your HTML says. Then paste the generated snippet into your <code>&lt;head&gt;</code>.</p>
+    <p>If your site lives in a subdirectory, change the leading <code>/</code> in each path to a relative path instead.</p>
+
+    <h2>Why your new favicon still is not showing</h2>
+    <p>Favicons are cached more aggressively than almost anything else on the web, and a normal refresh will not clear one. This causes an enormous amount of confusion.</p>
+    <ul>
+      <li><strong>Hard reload first</strong> — Ctrl+Shift+R, or Cmd+Shift+R on Mac.</li>
+      <li><strong>Load the file directly</strong> — visit <code>yoursite.com/favicon.ico</code>. If the old icon appears there, it is a cache issue. If you get a 404, the file is in the wrong place.</li>
+      <li><strong>Try a private window</strong> — this bypasses the favicon cache entirely and shows you what a new visitor sees.</li>
+      <li><strong>Give it time</strong> — some browsers hold favicons for days regardless of what you do. If it works in a private window, it is working; your own browser is just being stubborn.</li>
+    </ul>
+
+  </article>
+
+  <section class="prose">
+    <h2>Questions</h2>
+    <div class="faq">
+      <details>
+        <summary>What size should my source image be?</summary>
+        <p>At least 512×512, and square. Anything smaller means the large icons are upscaled and will look soft. If the source is not square it gets letterboxed rather than stretched, so crop it first.</p>
+      </details>
+      <details>
+        <summary>Do I still need favicon.ico?</summary>
+        <p>Yes. Browsers request <code>/favicon.ico</code> from your site root automatically even when your HTML points elsewhere. Without it you get a 404 in your logs on every visit, and some contexts fall back to a blank icon.</p>
+      </details>
+      <details>
+        <summary>Can I use a transparent background?</summary>
+        <p>Yes, and it usually looks best in browser tabs. One exception: iOS ignores transparency on the Apple touch icon and composites it onto black, so if your logo is dark, set a background colour.</p>
+      </details>
+      <details>
+        <summary>Why does my favicon look blurry?</summary>
+        <p>Usually the source was too small and got upscaled, or the design carries too much detail for 16 pixels. Start from a 512px original and simplify the mark until it reads at small size.</p>
+      </details>
+      <details>
+        <summary>Is the manifest file required?</summary>
+        <p>Only if you want Android home screen icons or a PWA install prompt to work properly. It costs nothing to include, so there is little reason to leave it out.</p>
+      </details>
+      <details>
+        <summary>Are my brand files uploaded anywhere?</summary>
+        <p>No. Everything is rendered and encoded in this browser tab. You can confirm it in the Network tab of developer tools — no request carries your image.</p>
+      </details>
+    </div>
+  </section>
+
+  <footer>
+    <a href="/">All tools</a>
+    <a href="/heic-to-jpg.html">HEIC to JPG</a>
+    <a href="/image-converter.html">Image converter</a>
+    <a href="/pdf-tools.html">PDF tools</a>
+  </footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script>
+(function(){
+  var src=null, made=[];
+  var drop=document.getElementById('drop'), input=document.getElementById('file'),
+      bg=document.getElementById('bg'), hex=document.getElementById('hex'),
+      pad=document.getElementById('pad'), padOut=document.getElementById('padOut'),
+      nameIn=document.getElementById('name'),
+      go=document.getElementById('go'), zipBtn=document.getElementById('zip'),
+      clearBtn=document.getElementById('clear'), status=document.getElementById('status'),
+      results=document.getElementById('results'), snip=document.getElementById('snip'),
+      snipWrap=document.getElementById('snipWrap'), copySnip=document.getElementById('copySnip'),
+      plateFrom=document.getElementById('plateFrom'), plateCount=document.getElementById('plateCount');
+
+  var SIZES=[16,32,48,180,192,512];
+
+  function say(m,k){ status.textContent=m; status.className='status '+(k||''); }
+  function kb(n){ return n<1024 ? n+' B' : (n/1024).toFixed(1)+' KB'; }
+
+  pad.addEventListener('input',function(){ padOut.textContent=pad.value+'%'; });
+  bg.addEventListener('change',function(){ hex.disabled = bg.value!=='custom'; });
+
+  ['dragenter','dragover'].forEach(function(e){
+    drop.addEventListener(e,function(ev){ ev.preventDefault(); drop.classList.add('hot'); });
+  });
+  ['dragleave','drop'].forEach(function(e){
+    drop.addEventListener(e,function(ev){ ev.preventDefault(); drop.classList.remove('hot'); });
+  });
+  drop.addEventListener('drop',function(ev){ if(ev.dataTransfer.files[0]) take(ev.dataTransfer.files[0]); });
+  input.addEventListener('change',function(){ if(input.files[0]) take(input.files[0]); });
+
+  function take(f){
+    if(!/^image\//.test(f.type)){ say('That is not an image file.','err'); return; }
+    var url=URL.createObjectURL(f);
+    var img=new Image();
+    img.onload=function(){
+      src=img;
+      plateFrom.textContent=(f.name.split('.').pop()||'IMG').toUpperCase();
+      plateCount.textContent=img.naturalWidth+'×'+img.naturalHeight+' source';
+      go.disabled=false; clearBtn.disabled=false;
+      if(Math.min(img.naturalWidth,img.naturalHeight)<512){
+        say('Source is under 512px — large icons will be upscaled and may look soft.');
+      } else { say('Ready to generate.'); }
+    };
+    img.onerror=function(){ say('Could not read that image. SVGs referencing external fonts sometimes fail.','err'); };
+    img.src=url;
+  }
+
+  clearBtn.addEventListener('click',function(){
+    src=null; made=[]; results.innerHTML=''; input.value='';
+    snipWrap.style.display='none'; plateFrom.textContent='PNG';
+    plateCount.textContent='No image yet';
+    go.disabled=true; zipBtn.disabled=true; clearBtn.disabled=true; say('');
+  });
+
+  function render(size){
+    var c=document.createElement('canvas'); c.width=size; c.height=size;
+    var ctx=c.getContext('2d');
+    ctx.imageSmoothingQuality='high';
+    var fill = bg.value==='custom' ? hex.value : bg.value;
+    if(fill && fill!=='transparent'){ ctx.fillStyle=fill; ctx.fillRect(0,0,size,size); }
+    var p = size * (parseInt(pad.value,10)/100);
+    var box = size - p*2;
+    var w=src.naturalWidth, h=src.naturalHeight;
+    var scale = Math.min(box/w, box/h);
+    var dw=w*scale, dh=h*scale;
+    ctx.drawImage(src, p+(box-dw)/2, p+(box-dh)/2, dw, dh);
+    return c;
+  }
+
+  function toBlob(canvas){
+    return new Promise(function(res){ canvas.toBlob(res,'image/png'); });
+  }
+
+  // Build a real .ico containing PNG-encoded entries
+  function buildIco(buffers, sizes){
+    var n=buffers.length;
+    var headerSize = 6 + 16*n;
+    var total = headerSize + buffers.reduce(function(a,b){ return a+b.byteLength; },0);
+    var buf = new ArrayBuffer(total);
+    var v = new DataView(buf);
+    var bytes = new Uint8Array(buf);
+    v.setUint16(0,0,true);      // reserved
+    v.setUint16(2,1,true);      // type: icon
+    v.setUint16(4,n,true);      // count
+    var offset = headerSize;
+    for(var i=0;i<n;i++){
+      var e = 6 + 16*i;
+      var s = sizes[i] >= 256 ? 0 : sizes[i];
+      v.setUint8(e,s);          // width
+      v.setUint8(e+1,s);        // height
+      v.setUint8(e+2,0);        // palette
+      v.setUint8(e+3,0);        // reserved
+      v.setUint16(e+4,1,true);  // colour planes
+      v.setUint16(e+6,32,true); // bits per pixel
+      v.setUint32(e+8,buffers[i].byteLength,true);
+      v.setUint32(e+12,offset,true);
+      bytes.set(new Uint8Array(buffers[i]), offset);
+      offset += buffers[i].byteLength;
+    }
+    return new Blob([buf],{type:'image/x-icon'});
+  }
+
+  go.addEventListener('click', async function(){
+    if(!src) return;
+    go.disabled=true; results.innerHTML=''; made=[];
+    say('Generating…');
+
+    var pngs={};
+    for(var i=0;i<SIZES.length;i++){
+      var s=SIZES[i];
+      var blob = await toBlob(render(s));
+      pngs[s]=blob;
+    }
+
+    var icoSizes=[16,32,48];
+    var bufs=[];
+    for(var j=0;j<icoSizes.length;j++){
+      bufs.push(await pngs[icoSizes[j]].arrayBuffer());
+    }
+    var ico = buildIco(bufs, icoSizes);
+
+    made.push({name:'favicon.ico', blob:ico});
+    made.push({name:'favicon-16.png', blob:pngs[16]});
+    made.push({name:'favicon-32.png', blob:pngs[32]});
+    made.push({name:'apple-touch-icon.png', blob:pngs[180]});
+    made.push({name:'icon-192.png', blob:pngs[192]});
+    made.push({name:'icon-512.png', blob:pngs[512]});
+
+    var appName = nameIn.value.trim() || 'My Site';
+    var manifest = {
+      name: appName,
+      short_name: appName.length>12 ? appName.slice(0,12) : appName,
+      icons: [
+        {src:'/icon-192.png', sizes:'192x192', type:'image/png'},
+        {src:'/icon-512.png', sizes:'512x512', type:'image/png'}
+      ],
+      theme_color: (bg.value==='custom'? hex.value : '#ffffff'),
+      background_color: (bg.value==='custom'? hex.value : '#ffffff'),
+      display: 'standalone'
+    };
+    made.push({name:'site.webmanifest', blob:new Blob([JSON.stringify(manifest,null,2)],{type:'application/manifest+json'})});
+
+    made.forEach(function(m){ addRow(m.name,m.blob); });
+
+    snip.value =
+      '<link rel="icon" href="/favicon.ico" sizes="any">\n' +
+      '<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">\n' +
+      '<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">\n' +
+      '<link rel="apple-touch-icon" href="/apple-touch-icon.png">\n' +
+      '<link rel="manifest" href="/site.webmanifest">';
+    snipWrap.style.display='';
+
+    go.disabled=false; zipBtn.disabled=false;
+    plateCount.textContent = made.length + ' files generated';
+    say('Done — 7 files ready.','ok');
+  });
+
+  function addRow(name,blob){
+    var row=document.createElement('div'); row.className='result-row';
+    var n=document.createElement('span'); n.className='result-name'; n.textContent=name;
+    var s=document.createElement('span'); s.className='result-size'; s.textContent=kb(blob.size);
+    var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; a.textContent='Download';
+    row.appendChild(n); row.appendChild(s); row.appendChild(a);
+    results.appendChild(row);
+  }
+
+  zipBtn.addEventListener('click', async function(){
+    if(!made.length) return;
+    zipBtn.disabled=true; say('Building zip…');
+    var zip=new JSZip();
+    made.forEach(function(m){ zip.file(m.name,m.blob); });
+    zip.file('paste-into-head.html', snip.value);
+    var blob=await zip.generateAsync({type:'blob'});
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(blob); a.download='favicons.zip'; a.click();
+    zipBtn.disabled=false; say('Zip ready.','ok');
+  });
+
+  copySnip.addEventListener('click',function(){
+    navigator.clipboard.writeText(snip.value).then(function(){ say('HTML copied.','ok'); },
+      function(){ say('Copy blocked — select the text instead.','err'); });
+  });
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"WebApplication",
+      "name":"Favicon Generator",
+      "url":"https://local-convert.toptierrankers.workers.dev/favicon-generator.html",
+      "applicationCategory":"DeveloperApplication",
+      "operatingSystem":"Any modern web browser",
+      "browserRequirements":"Requires JavaScript",
+      "description":"Generate a complete favicon set including favicon.ico, Apple touch icon, Android icons and web manifest, entirely in the browser.",
+      "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+      "featureList":["Multi-resolution favicon.ico","Apple touch icon","Android and PWA icons","site.webmanifest","HTML snippet","No upload required"]
+    },
+    {
+      "@type":"FAQPage",
+      "mainEntity":[
+        {"@type":"Question","name":"What size should my source image be?","acceptedAnswer":{"@type":"Answer","text":"At least 512 by 512 pixels, and square. Smaller sources mean the large icons are upscaled and look soft."}},
+        {"@type":"Question","name":"Do I still need favicon.ico?","acceptedAnswer":{"@type":"Answer","text":"Yes. Browsers request /favicon.ico from the site root automatically even when your HTML points elsewhere."}},
+        {"@type":"Question","name":"Can I use a transparent background?","acceptedAnswer":{"@type":"Answer","text":"Yes, and it usually looks best in browser tabs. iOS ignores transparency on the Apple touch icon and composites onto black, so set a background colour if your logo is dark."}},
+        {"@type":"Question","name":"Why does my favicon look blurry?","acceptedAnswer":{"@type":"Answer","text":"Usually the source was too small and got upscaled, or the design carries too much detail to read at 16 pixels."}},
+        {"@type":"Question","name":"Is the manifest file required?","acceptedAnswer":{"@type":"Answer","text":"Only if you want Android home screen icons or a PWA install prompt to work properly. It costs nothing to include."}},
+        {"@type":"Question","name":"Are my brand files uploaded anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is rendered and encoded in the browser tab. No request carries your image."}}
+      ]
+    }
+  ]
+}
+</script>
+</body>
+</html>

@@ -1,10 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta name="google-site-verification" content="asdMhatdpas1ENacJb_sejDKrekfJbgrX331JxBG4mo" />
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Local Convert — file conversion that never uploads your files</title>
 <meta name="description" content="Convert HEIC, images and CSV entirely in your browser. Files never leave your device, so there is nothing to upload and nothing stored on a server.">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Local Convert">
+<meta property="og:title" content="Local Convert — file conversion that never uploads your files">
+<meta property="og:description" content="Convert HEIC, images and CSV entirely in your browser. Files never leave your device, so there is nothing to upload and nothing stored on a server.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Local Convert — file conversion that never uploads your files">
+<meta name="twitter:description" content="Convert HEIC, images and CSV entirely in your browser. Files never leave your device, so there is nothing to upload and nothing stored on a server.">
+<link rel="canonical" href="https://local-convert.toptierrankers.workers.dev/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Local Convert">
+<meta property="og:title" content="Local Convert — file conversion with no upload">
+<meta property="og:description" content="Convert HEIC, images and CSV entirely in your browser. Files never leave your device.">
+<meta property="og:url" content="https://local-convert.toptierrankers.workers.dev/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Local Convert — file conversion with no upload">
+<meta name="twitter:description" content="Convert HEIC, images and CSV entirely in your browser. Files never leave your device.">
+<link rel="canonical" href="https://local-convert.toptierrankers.workers.dev/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Local Convert">
+<meta property="og:title" content="Local Convert — conversion without uploading">
+<meta property="og:description" content="Convert HEIC, images and CSV entirely in your browser. Files never leave your device, so there is nothing to upload and nothing stored on a server.">
+<meta property="og:url" content="https://local-convert.toptierrankers.workers.dev/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Local Convert — conversion without uploading">
+<meta name="twitter:description" content="Convert HEIC, images and CSV entirely in your browser. Files never leave your device, so there is nothing to upload and nothing stored on a server.">
+<meta name="theme-color" content="#1B1830">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -16,9 +45,12 @@
   <header class="masthead">
     <div class="wordmark">local<span>/</span>convert</div>
     <nav>
-      <a href="/heic-to-jpg.html">HEIC → JPG</a>
+      <a href="/heic-to-jpg.html">HEIC</a>
       <a href="/image-converter.html">Images</a>
-      <a href="/csv-to-json.html">CSV → JSON</a>
+      <a href="/favicon-generator.html">Favicon</a>
+      <a href="/pdf-tools.html">PDF</a>
+      <a href="/csv-to-json.html">CSV</a>
+      <a href="/json-to-csv.html">JSON</a>
     </nav>
   </header>
 
@@ -40,17 +72,29 @@
       <p>Convert between PNG, JPG and WebP, set quality, and cap the longest edge. Drop in a hundred files and download a zip.</p>
     </a>
 
+    <a class="tool-card" href="/favicon-generator.html">
+      <div class="pair">IMAGE → ICON SET</div>
+      <h2>Favicon generator</h2>
+      <p>One logo in, the whole set out: multi-resolution favicon.ico, Apple touch icon, Android icons, manifest and the HTML to paste.</p>
+    </a>
+
+    <a class="tool-card" href="/pdf-tools.html">
+      <div class="pair">PDF MERGE · SPLIT</div>
+      <h2>Merge and split PDF</h2>
+      <p>Combine documents into one file or pull out a page range. Contracts and scans never touch a server.</p>
+    </a>
+
     <a class="tool-card" href="/csv-to-json.html">
       <div class="pair">CSV → JSON</div>
       <h2>CSV to nested JSON</h2>
-      <p>Dotted headers like <code>user.address.city</code> become real nested objects. Quoted fields and embedded commas handled properly.</p>
+      <p>Dotted headers like <code>address.city</code> become real nested objects. Quoted fields and leading zeros handled properly.</p>
     </a>
 
-    <span class="tool-card soon">
-      <div class="pair">SVG → ICO</div>
-      <h2>Favicon set builder</h2>
-      <p>Coming next: one SVG in, every size and the manifest out.</p>
-    </span>
+    <a class="tool-card" href="/json-to-csv.html">
+      <div class="pair">JSON → CSV</div>
+      <h2>JSON to CSV</h2>
+      <p>Flattens nested objects into dotted columns, handles ragged records, and escapes to spec so Excel opens it cleanly.</p>
+    </a>
 
   </div>
 
@@ -62,7 +106,10 @@
     <span>Local Convert</span>
     <a href="/heic-to-jpg.html">HEIC</a>
     <a href="/image-converter.html">Images</a>
+    <a href="/favicon-generator.html">Favicon</a>
+    <a href="/pdf-tools.html">PDF</a>
     <a href="/csv-to-json.html">CSV</a>
+    <a href="/json-to-csv.html">JSON</a>
   </footer>
 
 </div>

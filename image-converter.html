@@ -5,6 +5,35 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Bulk image converter — PNG, JPG and WebP in your browser</title>
 <meta name="description" content="Convert images between PNG, JPG and WebP in bulk, set quality and cap the longest edge. Runs in your browser with no upload.">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Local Convert">
+<meta property="og:title" content="Bulk image converter — PNG, JPG and WebP in your browser">
+<meta property="og:description" content="Convert images between PNG, JPG and WebP in bulk, set quality and cap the longest edge. Runs in your browser with no upload.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Bulk image converter — PNG, JPG and WebP in your browser">
+<meta name="twitter:description" content="Convert images between PNG, JPG and WebP in bulk, set quality and cap the longest edge. Runs in your browser with no upload.">
+<link rel="canonical" href="https://local-convert.toptierrankers.workers.dev/image-converter.html">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Local Convert">
+<meta property="og:title" content="Bulk image converter — PNG, JPG and WebP">
+<meta property="og:description" content="Convert images between PNG, JPG and WebP in bulk, set quality and resize. No upload.">
+<meta property="og:url" content="https://local-convert.toptierrankers.workers.dev/image-converter.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Bulk image converter — PNG, JPG and WebP">
+<meta name="twitter:description" content="Convert images between PNG, JPG and WebP in bulk, set quality and resize. No upload.">
+<link rel="canonical" href="https://local-convert.toptierrankers.workers.dev/image-converter.html">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Local Convert">
+<meta property="og:title" content="Bulk image converter — PNG, JPG, WebP">
+<meta property="og:description" content="Convert images between PNG, JPG and WebP in bulk, set quality and cap the longest edge. Runs in your browser with no upload.">
+<meta property="og:url" content="https://local-convert.toptierrankers.workers.dev/image-converter.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bulk image converter — PNG, JPG, WebP">
+<meta name="twitter:description" content="Convert images between PNG, JPG and WebP in bulk, set quality and cap the longest edge. Runs in your browser with no upload.">
+<meta name="theme-color" content="#1B1830">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -16,9 +45,12 @@
   <header class="masthead">
     <a class="wordmark" href="/">local<span>/</span>convert</a>
     <nav>
-      <a href="/heic-to-jpg.html">HEIC → JPG</a>
+      <a href="/heic-to-jpg.html">HEIC</a>
       <a href="/image-converter.html" aria-current="page">Images</a>
-      <a href="/csv-to-json.html">CSV → JSON</a>
+      <a href="/favicon-generator.html">Favicon</a>
+      <a href="/pdf-tools.html">PDF</a>
+      <a href="/csv-to-json.html">CSV</a>
+      <a href="/json-to-csv.html">JSON</a>
     </nav>
   </header>
 
@@ -87,6 +119,92 @@
   <div class="privacy">
     <p><strong>Nothing is uploaded.</strong> Images are decoded and re-encoded with the browser's own canvas. No server sees them, and there is no size limit beyond what your device can hold in memory.</p>
   </div>
+
+
+  <article class="prose">
+
+    <h2>Which format to pick, and why it usually matters more than quality</h2>
+    <p>People reach for the quality slider first. Format choice makes a bigger difference to file size than anything the slider does, so it is worth getting right.</p>
+    <ul>
+      <li><strong>WebP</strong> is the default here for good reason. It produces files roughly 25 to 35 percent smaller than JPG at visually equivalent quality, supports transparency, and every browser in current use handles it. For anything going on a website, this is the right answer.</li>
+      <li><strong>JPG</strong> is what you want when the file is leaving the web — email attachments, print shops, older software, or anything a client will open in a program you cannot predict. Universally supported, no transparency.</li>
+      <li><strong>PNG</strong> is lossless, which means no compression artefacts and considerably larger files. Correct for screenshots, logos, diagrams, anything with text or hard edges, and anything you will edit again later. Wrong for photographs, where it can be five to ten times the size of a JPG nobody could distinguish from it.</li>
+    </ul>
+
+    <h3>The rule of thumb</h3>
+    <p>Photographs compress well with lossy formats because adjacent pixels differ slightly and the eye forgives small errors. Graphics with flat colour and sharp boundaries compress badly with lossy formats and produce visible fringing around edges — but compress extremely well losslessly. Match the format to the image type, not to a habit.</p>
+
+    <h2>What the quality slider is actually doing</h2>
+    <p>Quality is not a percentage of anything meaningful. It is a parameter controlling how aggressively the encoder discards detail the eye is least likely to notice, and the relationship between the number and the visible result is not linear.</p>
+    <p>Useful reference points, though they vary by image:</p>
+    <ul>
+      <li><strong>90 to 100</strong> — very large files for a difference almost nobody can see. Reserve for images that will be edited and re-saved repeatedly.</li>
+      <li><strong>75 to 85</strong> — the sweet spot for most photographs. The default of 82 sits here.</li>
+      <li><strong>60 to 75</strong> — noticeably smaller, with artefacts starting to appear in smooth gradients like skies.</li>
+      <li><strong>Below 60</strong> — visible blocking and colour banding. Occasionally correct for thumbnails, rarely otherwise.</li>
+    </ul>
+    <p>Every re-encode compounds. Converting a JPG to a JPG at 82 discards detail that a previous encode already discarded, and doing that repeatedly degrades an image visibly. Always work from the highest-quality original you have rather than from a file that has already been through the process.</p>
+
+    <h2>Resizing is where the real savings are</h2>
+    <p>The longest-edge setting caps the larger dimension and scales the other proportionally, so a 4000×3000 photo capped at 1600 becomes 1600×1200.</p>
+    <p>This matters far more than most people expect, because file size scales with pixel count rather than with edge length. Halving both dimensions removes three-quarters of the pixels. A modern phone photo is often 4000 pixels wide, and it is being displayed in a 800 pixel column — the visitor downloads four times the data they can possibly see.</p>
+    <p>Practical caps:</p>
+    <ul>
+      <li><strong>1200 to 1600px</strong> for in-page images on a website.</li>
+      <li><strong>2000 to 2560px</strong> for full-width hero images that need to hold up on a large display.</li>
+      <li><strong>400 to 600px</strong> for thumbnails and avatars.</li>
+      <li><strong>Leave it blank</strong> for anything going to print, where you want every pixel the camera captured.</li>
+    </ul>
+    <p>Images are only ever scaled down here, never up. Enlarging cannot recover detail that was never captured, and the result is a soft, larger file.</p>
+
+    <h2>Transparency and the white background option</h2>
+    <p>JPG has no alpha channel. When a PNG or WebP with transparent areas is saved as JPG, those pixels have to become something, and browsers default to black — which produces the ugly dark halo people notice around logos.</p>
+    <p>The white background option composites transparent areas onto white before encoding, which is what you want in almost every case since most pages have light backgrounds. If your image will sit on a dark background, convert to WebP or PNG instead and keep the transparency intact.</p>
+
+    <h2>What gets lost along the way</h2>
+    <p>Canvas-based conversion strips EXIF metadata. The converted file will not carry the capture date, camera settings, or GPS coordinates from the original.</p>
+    <p>For images going on a website this is a straightforward improvement — you should not be publishing the coordinates of where a photo was taken, and stripping the metadata reduces file size slightly. For an archive, it is a real loss, so keep the originals.</p>
+    <p>One consequence worth knowing: images relying on an EXIF orientation flag rather than actually being stored rotated may appear rotated after conversion. If a photo comes out sideways, rotate it in an image editor first so the rotation is baked into the pixels.</p>
+
+    <h2>Working with large batches</h2>
+    <p>Everything happens in memory, and every converted file stays there until you clear the page. Forty or fifty images at a time is comfortable on a desktop. A phone will struggle much sooner.</p>
+    <p>If the tab becomes unresponsive, that is the memory ceiling rather than a crash — download what has completed, clear the page, and continue with the rest.</p>
+
+  </article>
+
+  <section class="prose">
+    <h2>Questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Are my images uploaded anywhere?</summary>
+        <p>No. Images are decoded and re-encoded using your browser's own canvas. You can confirm this in the Network tab of developer tools — no request carries your file.</p>
+      </details>
+      <details>
+        <summary>Should I use WebP or JPG?</summary>
+        <p>WebP for anything going on a website: 25 to 35 percent smaller at the same visible quality, with transparency support. JPG for anything leaving the web, like email attachments or files a client will open in unpredictable software.</p>
+      </details>
+      <details>
+        <summary>What quality setting should I use?</summary>
+        <p>Between 75 and 85 for photographs. Above 90 mostly adds file size for a difference few people can see. Below 60 produces visible artefacts in smooth areas like skies.</p>
+      </details>
+      <details>
+        <summary>Why did my transparent logo get a dark edge?</summary>
+        <p>JPG cannot store transparency, so transparent pixels default to black. Turn on the white background option, or convert to WebP or PNG to keep transparency.</p>
+      </details>
+      <details>
+        <summary>Can I make an image larger?</summary>
+        <p>No. The tool only scales down. Enlarging cannot recover detail that was never captured and just produces a soft, bigger file.</p>
+      </details>
+      <details>
+        <summary>How many images can I convert at once?</summary>
+        <p>No fixed limit, but everything is held in memory. Forty to fifty at a time is comfortable on a desktop; use smaller batches on a phone.</p>
+      </details>
+      <details>
+        <summary>Is the date and location data kept?</summary>
+        <p>No. EXIF metadata including GPS coordinates is stripped during conversion. That is usually desirable for web images and a loss for archives, so keep your originals.</p>
+      </details>
+    </div>
+  </section>
 
   <footer>
     <a href="/">All tools</a>
@@ -237,6 +355,43 @@
     zipBtn.disabled=false; say('Zip ready.','ok');
   });
 })();
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication",
+"name":"Bulk Image Converter",
+"url":"https://local-convert.toptierrankers.workers.dev/image-converter.html",
+"description":"Converts images between PNG, JPG and WebP in bulk with resizing.",
+"applicationCategory":"UtilitiesApplication",
+"operatingSystem":"Any modern web browser",
+"browserRequirements":"Requires JavaScript",
+"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+"featureList":["Runs entirely in the browser","No file upload","No account required","Batch processing"]}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Bulk Image Converter",
+  "url": "https://local-convert.toptierrankers.workers.dev/image-converter.html",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any modern web browser",
+  "browserRequirements": "Requires JavaScript",
+  "description": "Convert images between PNG, JPG and WebP in bulk with quality and resize controls, entirely in the browser.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "Bulk conversion",
+    "PNG, JPG and WebP output",
+    "Quality control",
+    "Longest-edge resizing",
+    "Zip download",
+    "No upload required"
+  ]
+}
 </script>
 </body>
 </html>

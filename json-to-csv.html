@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JSON to CSV converter — flattens nested objects, runs in your browser</title>
+<meta name="description" content="Convert JSON to CSV in the browser. Nested objects flatten into dotted columns and arrays are handled properly. Nothing is uploaded.">
+<link rel="canonical" href="https://local-convert.toptierrankers.workers.dev/json-to-csv.html">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Local Convert">
+<meta property="og:title" content="JSON to CSV — flattens nested objects">
+<meta property="og:description" content="Convert JSON to CSV in your browser. Nested objects become dotted columns. Nothing uploaded.">
+<meta property="og:url" content="https://local-convert.toptierrankers.workers.dev/json-to-csv.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#1B1830">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="shell">
+
+  <header class="masthead">
+    <a class="wordmark" href="/">local<span>/</span>convert</a>
+    <nav>
+      <a href="/heic-to-jpg.html">HEIC</a>
+      <a href="/image-converter.html">Images</a>
+      <a href="/favicon-generator.html">Favicon</a>
+      <a href="/pdf-tools.html">PDF</a>
+      <a href="/csv-to-json.html">CSV</a>
+      <a href="/json-to-csv.html" aria-current="page">JSON</a>
+    </nav>
+  </header>
+
+  <p class="eyebrow">Flatten and export</p>
+  <h1>JSON to CSV</h1>
+  <p class="lede">Paste an API response or drop a <code>.json</code> file and get a spreadsheet. Nested objects flatten into dotted columns, arrays collapse into a single cell, and every row gets the full column set even when the records disagree about which fields exist.</p>
+
+  <div class="plate">
+    <div class="plate-slot from">
+      <span class="plate-label">From</span>
+      <span class="plate-value">JSON</span>
+    </div>
+    <div class="plate-arrow">→</div>
+    <div class="plate-slot to">
+      <span class="plate-label">To</span>
+      <span class="plate-value">CSV</span>
+    </div>
+    <div class="plate-meta">
+      <span id="plateCount">No data yet</span><br>
+      <span>Parsed on this device</span>
+    </div>
+  </div>
+
+  <label class="drop" id="drop">
+    <div class="drop-title">Drop a JSON file here</div>
+    <div class="drop-hint">or click to choose — or paste into the box below</div>
+    <input type="file" id="file" accept=".json,application/json,.txt">
+  </label>
+
+  <div class="controls">
+    <div class="field">
+      <label for="delim">Delimiter</label>
+      <select id="delim">
+        <option value=",">Comma</option>
+        <option value=";">Semicolon (European Excel)</option>
+        <option value="&#9;">Tab</option>
+        <option value="|">Pipe</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="arr">Arrays become</label>
+      <select id="arr">
+        <option value="join">One cell, joined by semicolons</option>
+        <option value="index">Numbered columns (tags.0, tags.1)</option>
+        <option value="json">Raw JSON text in the cell</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Options</label>
+      <div class="checkline">
+        <input type="checkbox" id="flatten" checked>
+        <label for="flatten">Flatten nested objects into dotted columns</label>
+      </div>
+      <div class="checkline">
+        <input type="checkbox" id="bom" checked>
+        <label for="bom">Add BOM so Excel reads accents correctly</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="field" style="margin-bottom:20px">
+    <label for="src">JSON input</label>
+    <textarea class="output" id="src" spellcheck="false" placeholder='[
+  {"name":"Ada","address":{"city":"Lisbon","zip":"1100"},"tags":["founder","engineer"]},
+  {"name":"Grace","address":{"city":"Austin","zip":"73301"},"tags":["advisor"]}
+]'></textarea>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-go" id="go">Convert to CSV</button>
+    <button class="btn btn-quiet" id="copy" disabled>Copy CSV</button>
+    <button class="btn btn-quiet" id="dl" disabled>Download .csv</button>
+    <button class="btn btn-quiet" id="clear">Clear</button>
+  </div>
+
+  <p class="status" id="status"></p>
+
+  <div class="field" style="margin-top:24px">
+    <label for="out">CSV output</label>
+    <textarea class="output" id="out" spellcheck="false" readonly></textarea>
+  </div>
+
+  <div class="privacy">
+    <p><strong>Nothing is uploaded.</strong> API responses usually carry customer records, email addresses and internal identifiers. This runs in your tab, so none of it reaches a server.</p>
+  </div>
+
+  <article class="prose">
+
+    <h2>The problem with converting JSON to CSV</h2>
+    <p>JSON is a tree. CSV is a grid. There is no lossless mapping between them, so every converter has to make decisions about how to force one shape into the other — and the quality of a converter is entirely about how sensible those decisions are.</p>
+    <p>Three problems come up every time, and most tools handle at least one of them badly.</p>
+
+    <h3>Nested objects</h3>
+    <p>A record containing <code>address</code> as an object with <code>city</code> and <code>zip</code> inside it cannot occupy one cell without losing structure. The standard answer, and the one used here, is dotted column names: <code>address.city</code> and <code>address.zip</code> become separate columns. Nesting can go as deep as it likes and the names simply get longer.</p>
+    <p>The alternative some tools use is dumping the whole object into a single cell as raw JSON. That technically preserves the data but produces a spreadsheet nobody can filter or sort, which defeats the purpose of converting.</p>
+
+    <h3>Arrays</h3>
+    <p>A field holding three tags has no natural single-cell representation, and the right answer genuinely depends on what you are doing:</p>
+    <ul>
+      <li><strong>Joined into one cell</strong> is best when you are reading the data — a cell showing <code>founder;engineer</code> is immediately legible.</li>
+      <li><strong>Numbered columns</strong> — <code>tags.0</code>, <code>tags.1</code> — is best when you need to filter or pivot on individual values. The downside is that one record with fifty entries creates fifty columns for everyone.</li>
+      <li><strong>Raw JSON in the cell</strong> is best when the data is going into another program that will parse it again.</li>
+    </ul>
+    <p>This tool lets you pick, because there is no single correct choice.</p>
+
+    <h3>Records that disagree about their fields</h3>
+    <p>Real API responses are ragged. The first record has eight fields, the fortieth has eleven because those users filled in optional profile data. A converter that reads only the first record to build its header silently drops those extra fields, and you will not notice until something downstream is missing.</p>
+    <p>This tool scans every record before writing the header, so the column set is the union of all keys found anywhere in the data. Records missing a field get an empty cell rather than a shifted row.</p>
+
+    <h2>Escaping, and why it matters more than it sounds</h2>
+    <p>CSV has one genuinely important rule: a field containing the delimiter, a double quote, or a line break must be wrapped in double quotes, and any double quotes inside it must be doubled.</p>
+    <p>This is where hand-rolled converters break. A company name like <code>Smith, Jones &amp; Co</code> contains a comma. Written without quoting, it splits into two columns and every field after it shifts left by one — for that row only. Open the result in a spreadsheet and you get data that looks almost right, which is considerably worse than data that looks obviously broken.</p>
+    <p>The output here is quoted according to RFC 4180, so commas, quotes and newlines inside values survive the round trip.</p>
+
+    <h2>Getting Excel to open it correctly</h2>
+    <p>Two recurring frustrations, both fixable before you export.</p>
+    <h3>Accented characters turn into gibberish</h3>
+    <p>Excel does not reliably detect UTF-8 encoding on its own, so names with accents or any non-Latin script can arrive mangled. The fix is a byte order mark at the start of the file, which is what the BOM option adds. Leave it on if the file is going into Excel; turn it off if it is going into a script or a database import, where the BOM can show up as stray characters on the first column name.</p>
+    <h3>Everything lands in one column</h3>
+    <p>Excel installations configured for European locales expect semicolons as the delimiter rather than commas. If your file opens as a single column of text, re-export with the semicolon delimiter selected.</p>
+
+    <h2>What to watch for in the output</h2>
+    <ul>
+      <li><strong>Long numeric identifiers.</strong> Spreadsheets will happily reformat a 16-digit order ID into scientific notation and destroy it. If IDs matter, import rather than double-click, and set that column to text.</li>
+      <li><strong>Leading zeros.</strong> A postcode of <code>01234</code> becomes <code>1234</code> once a spreadsheet decides it is a number. Same fix.</li>
+      <li><strong>Null versus empty.</strong> A JSON <code>null</code> and an empty string both become an empty cell, and that distinction cannot be recovered afterward.</li>
+      <li><strong>Column explosion.</strong> If numbered array columns produce hundreds of columns, one record in your data has an unusually long array. Switch to joined mode.</li>
+    </ul>
+
+  </article>
+
+  <section class="prose">
+    <h2>Questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Is my data uploaded anywhere?</summary>
+        <p>No. Parsing and conversion happen in this browser tab. You can confirm it in the Network tab of developer tools — no request carries your JSON.</p>
+      </details>
+      <details>
+        <summary>What JSON structures does it accept?</summary>
+        <p>An array of objects works best. A single object becomes a one-row CSV. An object wrapping an array under a key such as <code>data</code> or <code>results</code> is detected automatically and the inner array is used.</p>
+      </details>
+      <details>
+        <summary>How are nested objects handled?</summary>
+        <p>They flatten into dotted column names, so <code>address.city</code> becomes its own column. Nesting can be any depth. You can turn flattening off to keep objects as raw JSON in a single cell instead.</p>
+      </details>
+      <details>
+        <summary>Why does my CSV look wrong in Excel?</summary>
+        <p>Two usual causes. Accented characters mangled means the encoding was not detected — keep the BOM option on. Everything in one column means your Excel expects semicolons; re-export with the semicolon delimiter.</p>
+      </details>
+      <details>
+        <summary>What if records have different fields?</summary>
+        <p>Every record is scanned before the header is written, so the columns are the union of all keys found. Records missing a field get an empty cell rather than a shifted row.</p>
+      </details>
+      <details>
+        <summary>Can I convert back to JSON afterwards?</summary>
+        <p>Yes — the CSV to JSON tool reads the same dotted column convention, so <code>address.city</code> rebuilds into a nested object. Type information is not perfectly preserved in the round trip, since CSV has no types.</p>
+      </details>
+    </div>
+  </section>
+
+  <footer>
+    <a href="/">All tools</a>
+    <a href="/csv-to-json.html">CSV to JSON</a>
+    <a href="/pdf-tools.html">PDF tools</a>
+    <a href="/image-converter.html">Image converter</a>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var drop=document.getElementById('drop'), input=document.getElementById('file'),
+      src=document.getElementById('src'), out=document.getElementById('out'),
+      delim=document.getElementById('delim'), arr=document.getElementById('arr'),
+      flatten=document.getElementById('flatten'), bom=document.getElementById('bom'),
+      go=document.getElementById('go'), copy=document.getElementById('copy'),
+      dl=document.getElementById('dl'), clearBtn=document.getElementById('clear'),
+      status=document.getElementById('status'), plateCount=document.getElementById('plateCount');
+
+  function say(m,k){ status.textContent=m; status.className='status '+(k||''); }
+
+  ['dragenter','dragover'].forEach(function(e){
+    drop.addEventListener(e,function(ev){ ev.preventDefault(); drop.classList.add('hot'); });
+  });
+  ['dragleave','drop'].forEach(function(e){
+    drop.addEventListener(e,function(ev){ ev.preventDefault(); drop.classList.remove('hot'); });
+  });
+  drop.addEventListener('drop',function(ev){ if(ev.dataTransfer.files[0]) read(ev.dataTransfer.files[0]); });
+  input.addEventListener('change',function(){ if(input.files[0]) read(input.files[0]); });
+
+  function read(f){
+    var r=new FileReader();
+    r.onload=function(){ src.value=r.result; say('Loaded '+f.name+'.'); convert(); };
+    r.onerror=function(){ say('Could not read that file.','err'); };
+    r.readAsText(f);
+  }
+
+  function isPlainObject(v){
+    return v !== null && typeof v === 'object' && !Array.isArray(v);
+  }
+
+  // Walk a record into flat key/value pairs
+  function flat(obj, prefix, target){
+    Object.keys(obj).forEach(function(k){
+      var key = prefix ? prefix + '.' + k : k;
+      var v = obj[k];
+      if(Array.isArray(v)){
+        if(arr.value === 'index'){
+          v.forEach(function(item,i){
+            if(isPlainObject(item) && flatten.checked) flat(item, key+'.'+i, target);
+            else target[key+'.'+i] = scalar(item);
+          });
+          if(!v.length) target[key] = '';
+        } else if(arr.value === 'json'){
+          target[key] = JSON.stringify(v);
+        } else {
+          target[key] = v.map(function(item){
+            return isPlainObject(item) || Array.isArray(item) ? JSON.stringify(item) : scalar(item);
+          }).join(';');
+        }
+      } else if(isPlainObject(v)){
+        if(flatten.checked) flat(v, key, target);
+        else target[key] = JSON.stringify(v);
+      } else {
+        target[key] = scalar(v);
+      }
+    });
+    return target;
+  }
+
+  function scalar(v){
+    if(v === null || v === undefined) return '';
+    if(typeof v === 'boolean') return v ? 'true' : 'false';
+    return String(v);
+  }
+
+  function esc(value, d){
+    var s = value === undefined || value === null ? '' : String(value);
+    if(s.indexOf(d) > -1 || s.indexOf('"') > -1 || s.indexOf('\n') > -1 || s.indexOf('\r') > -1){
+      return '"' + s.replace(/"/g,'""') + '"';
+    }
+    return s;
+  }
+
+  function convert(){
+    var text = src.value.trim();
+    if(!text){ say('Paste some JSON or drop a file first.','err'); return; }
+
+    var data;
+    try{ data = JSON.parse(text); }
+    catch(e){
+      var m = String(e.message||'');
+      say('That is not valid JSON. ' + m, 'err');
+      return;
+    }
+
+    // Unwrap common API envelopes
+    if(isPlainObject(data)){
+      var arrKey = null;
+      ['data','results','items','records','rows','value'].forEach(function(k){
+        if(!arrKey && Array.isArray(data[k])) arrKey = k;
+      });
+      if(arrKey) data = data[arrKey];
+      else data = [data];
+    }
+
+    if(!Array.isArray(data)){ say('Expected an array of records, or an object containing one.','err'); return; }
+    if(!data.length){ say('That JSON is an empty array — nothing to convert.','err'); return; }
+
+    var rows = [], keys = [], seen = {};
+    for(var i=0;i<data.length;i++){
+      var rec = data[i];
+      if(!isPlainObject(rec)) rec = { value: rec };
+      var f = flat(rec, '', {});
+      rows.push(f);
+      Object.keys(f).forEach(function(k){
+        if(!seen[k]){ seen[k]=1; keys.push(k); }
+      });
+    }
+
+    var d = delim.value;
+    var lines = [ keys.map(function(k){ return esc(k,d); }).join(d) ];
+    rows.forEach(function(r){
+      lines.push(keys.map(function(k){ return esc(r[k],d); }).join(d));
+    });
+
+    out.value = lines.join('\r\n');
+    plateCount.textContent = rows.length + (rows.length===1?' record':' records') + ' · ' + keys.length + ' columns';
+    copy.disabled=false; dl.disabled=false;
+    say('Converted ' + rows.length + ' records into ' + keys.length + ' columns.','ok');
+  }
+
+  go.addEventListener('click', convert);
+
+  copy.addEventListener('click',function(){
+    navigator.clipboard.writeText(out.value).then(function(){ say('CSV copied.','ok'); },
+      function(){ say('Copy blocked by the browser — select the text instead.','err'); });
+  });
+
+  dl.addEventListener('click',function(){
+    var parts = bom.checked ? ['\uFEFF', out.value] : [out.value];
+    var blob = new Blob(parts,{type:'text/csv;charset=utf-8'});
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(blob); a.download='data.csv'; a.click();
+  });
+
+  clearBtn.addEventListener('click',function(){
+    src.value=''; out.value=''; input.value='';
+    plateCount.textContent='No data yet';
+    copy.disabled=true; dl.disabled=true; say('');
+  });
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"WebApplication",
+      "name":"JSON to CSV Converter",
+      "url":"https://local-convert.toptierrankers.workers.dev/json-to-csv.html",
+      "applicationCategory":"DeveloperApplication",
+      "operatingSystem":"Any modern web browser",
+      "browserRequirements":"Requires JavaScript",
+      "description":"Convert JSON to CSV in the browser, flattening nested objects into dotted columns and handling arrays and ragged records.",
+      "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+      "featureList":["Flattens nested objects","Three array handling modes","Union of all keys across records","RFC 4180 escaping","Excel BOM option","No upload required"]
+    },
+    {
+      "@type":"FAQPage",
+      "mainEntity":[
+        {"@type":"Question","name":"Is my data uploaded anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. Parsing and conversion happen in the browser tab. No request carries your JSON."}},
+        {"@type":"Question","name":"What JSON structures does it accept?","acceptedAnswer":{"@type":"Answer","text":"An array of objects works best. A single object becomes a one-row CSV. An object wrapping an array under a key such as data or results is detected automatically."}},
+        {"@type":"Question","name":"How are nested objects handled?","acceptedAnswer":{"@type":"Answer","text":"They flatten into dotted column names, so address.city becomes its own column. Nesting can be any depth."}},
+        {"@type":"Question","name":"Why does my CSV look wrong in Excel?","acceptedAnswer":{"@type":"Answer","text":"Mangled accents mean the encoding was not detected, so keep the BOM option on. Everything in one column means Excel expects semicolons, so re-export with the semicolon delimiter."}},
+        {"@type":"Question","name":"What if records have different fields?","acceptedAnswer":{"@type":"Answer","text":"Every record is scanned before the header is written, so columns are the union of all keys found. Missing fields become empty cells."}},
+        {"@type":"Question","name":"Can I convert back to JSON afterwards?","acceptedAnswer":{"@type":"Answer","text":"Yes. The CSV to JSON tool reads the same dotted column convention, so address.city rebuilds into a nested object."}}
+      ]
+    }
+  ]
+}
+</script>
+</body>
+</html>

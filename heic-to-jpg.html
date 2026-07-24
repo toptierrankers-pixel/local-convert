@@ -5,6 +5,35 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HEIC to JPG converter — runs in your browser, no upload</title>
 <meta name="description" content="Convert iPhone HEIC and HEIF photos to JPG or PNG in bulk. Runs entirely in your browser, so photos are never uploaded to a server.">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Local Convert">
+<meta property="og:title" content="HEIC to JPG converter — no upload, runs in your browser">
+<meta property="og:description" content="Convert iPhone HEIC and HEIF photos to JPG or PNG in bulk. Runs entirely in your browser, so your photos are never uploaded to a server.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HEIC to JPG converter — no upload, runs in your browser">
+<meta name="twitter:description" content="Convert iPhone HEIC and HEIF photos to JPG or PNG in bulk. Runs entirely in your browser, so your photos are never uploaded to a server.">
+<link rel="canonical" href="https://local-convert.toptierrankers.workers.dev/heic-to-jpg.html">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Local Convert">
+<meta property="og:title" content="HEIC to JPG converter — no upload, runs in your browser">
+<meta property="og:description" content="Convert iPhone HEIC and HEIF photos to JPG or PNG in bulk. Photos never leave your device.">
+<meta property="og:url" content="https://local-convert.toptierrankers.workers.dev/heic-to-jpg.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HEIC to JPG converter — no upload, runs in your browser">
+<meta name="twitter:description" content="Convert iPhone HEIC and HEIF photos to JPG or PNG in bulk. Photos never leave your device.">
+<link rel="canonical" href="https://local-convert.toptierrankers.workers.dev/heic-to-jpg.html">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Local Convert">
+<meta property="og:title" content="HEIC to JPG — no upload, runs in your browser">
+<meta property="og:description" content="Convert iPhone HEIC and HEIF photos to JPG or PNG in bulk. Runs entirely in your browser, so photos are never uploaded to a server.">
+<meta property="og:url" content="https://local-convert.toptierrankers.workers.dev/heic-to-jpg.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HEIC to JPG — no upload, runs in your browser">
+<meta name="twitter:description" content="Convert iPhone HEIC and HEIF photos to JPG or PNG in bulk. Runs entirely in your browser, so photos are never uploaded to a server.">
+<meta name="theme-color" content="#1B1830">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -16,9 +45,12 @@
   <header class="masthead">
     <a class="wordmark" href="/">local<span>/</span>convert</a>
     <nav>
-      <a href="/heic-to-jpg.html" aria-current="page">HEIC → JPG</a>
+      <a href="/heic-to-jpg.html" aria-current="page">HEIC</a>
       <a href="/image-converter.html">Images</a>
-      <a href="/csv-to-json.html">CSV → JSON</a>
+      <a href="/favicon-generator.html">Favicon</a>
+      <a href="/pdf-tools.html">PDF</a>
+      <a href="/csv-to-json.html">CSV</a>
+      <a href="/json-to-csv.html">JSON</a>
     </nav>
   </header>
 
@@ -75,6 +107,260 @@
   <div class="privacy">
     <p><strong>Nothing is uploaded.</strong> The decoder runs as JavaScript inside this page. Open your browser's network tab while converting and you'll see no file leaving your machine.</p>
   </div>
+
+
+  <div class="article">
+
+    <div class="jump">
+      <a href="#what">What HEIC is</a>
+      <a href="#windows">Why Windows won't open it</a>
+      <a href="#quality">Quality loss</a>
+      <a href="#stop">Shoot JPG instead</a>
+      <a href="#faq">Questions</a>
+    </div>
+
+    <h2 id="what">What HEIC actually is</h2>
+    <p>HEIC is the file format iPhones have used for photos since iOS 11 in 2017. The name stands for High Efficiency Image Container, and the point of it is size: a HEIC photo is usually around half the size of the same photo saved as JPG, with no visible difference. On a phone holding twenty thousand photos, that adds up to a lot of storage.</p>
+    <p>The catch is that Apple adopted it years before the rest of the industry caught up. So the format is excellent, and almost nothing outside Apple's own software can open it.</p>
+    <p>You may also see <code>.heif</code>. HEIF is the broader standard and HEIC is Apple's specific flavour of it. For practical purposes they are the same thing, and this converter handles both.</p>
+
+    <h2 id="windows">Why Windows and most websites reject HEIC files</h2>
+    <p>Windows 10 and 11 can display HEIC, but only if you install Microsoft's HEIF Image Extensions from the Microsoft Store, and the codec half of that used to cost money. Most people never install it, so the file simply refuses to open and Windows offers no useful explanation.</p>
+    <p>Websites are a separate problem. Upload forms usually accept a fixed list of formats, and that list was written before HEIC existed. Job application portals, insurance claim uploads, print shops, government forms, and most content management systems will reject a HEIC file outright or accept it and then fail to generate a thumbnail.</p>
+    <p>Older versions of Photoshop, most Android phones, and a lot of email clients have the same gap. Converting to JPG sidesteps all of it in one step, because JPG is the closest thing the internet has to a universal format.</p>
+
+    <h2 id="quality">Does converting to JPG lose quality?</h2>
+    <p>Technically yes, but in practice you will not see it.</p>
+    <p>Both HEIC and JPG are lossy formats, meaning both discard some data to save space. Converting from one to the other means the image is decoded and then re-encoded, and that second encode throws away a little more. This is called generation loss.</p>
+    <p>At the default quality setting of 88% the result is visually identical to the original for normal viewing, printing and sharing. If you are archiving photos you care about, two suggestions:</p>
+    <ul>
+      <li>Push quality to 95 or 100 before converting. The file gets bigger, but the loss becomes genuinely undetectable.</li>
+      <li>Keep the original HEIC files. Convert copies. There is no way to recover data once it has been discarded, so the original is your safety net.</li>
+    </ul>
+    <p>If you need zero loss, choose PNG instead of JPG in the format dropdown. PNG is lossless, so nothing is discarded during the re-encode. The trade-off is file size, typically five to ten times larger than the JPG.</p>
+
+    <div class="callout">
+      <span class="tag">Worth knowing</span>
+      <p>Live Photos are stored as a HEIC still plus a separate short video file. Converting the HEIC gives you the still frame only. The motion is in the paired video, and no image converter can extract it.</p>
+    </div>
+
+    <h2 id="stop">How to make your iPhone shoot JPG in the first place</h2>
+    <p>If you convert HEIC files often, stop the problem at the source. On your iPhone:</p>
+    <ol>
+      <li>Open <strong>Settings</strong></li>
+      <li>Tap <strong>Camera</strong></li>
+      <li>Tap <strong>Formats</strong></li>
+      <li>Choose <strong>Most Compatible</strong></li>
+    </ol>
+    <p>From then on the camera saves JPG. Photos already on the phone stay HEIC, so you will still need to convert those, but new ones are handled.</p>
+    <p>The cost is storage. Expect your photos to take roughly twice the space. There is also a second setting worth knowing about, under <strong>Settings → Photos → Transfer to Mac or PC</strong>. Setting that to <strong>Automatic</strong> makes the phone convert photos to JPG as it transfers them over a cable, which solves the problem for anything you move off the phone by wire.</p>
+
+    <h2 id="privacy">Why converting locally matters here</h2>
+    <p>Most HEIC converters work by uploading your photo to their server, converting it there, and sending it back. That means a copy of your photo exists on a machine you do not control, governed by a privacy policy you did not read, for a retention period you were not told.</p>
+    <p>For a picture of a sunset that is fine. For a photo of a passport, a medical document, a signed contract, a child, or a house you are selling, it is a genuine consideration.</p>
+    <p>This tool decodes the file with JavaScript running inside your own browser tab. Nothing is transmitted. You do not have to take that on trust either: open your browser's developer tools, switch to the Network tab, and convert a photo. You will see no upload, because there is none.</p>
+
+    <h2 id="faq">Common questions</h2>
+
+    <div class="faq-item">
+      <h3>How many photos can I convert at once?</h3>
+      <p>There is no fixed limit. The constraint is your device's memory, since every photo is decoded in the browser. A modern laptop handles a few hundred without complaint. On an older phone, work in batches of twenty or thirty.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Is it free, and is there a watermark?</h3>
+      <p>Free with no watermark, no account, no email, and no file count limit. There is no server bill to cover because there is no server doing the work.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Does this work offline?</h3>
+      <p>Once the page has loaded, yes. The conversion itself needs no connection. If you load the page and then lose internet, conversions keep working until you refresh.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Will the photo lose its date, location or camera settings?</h3>
+      <p>Yes. The browser's canvas re-encodes pixels only, so EXIF metadata including timestamp, GPS coordinates, camera model and lens data is not carried across. For most people this is invisible or even desirable, since it strips location data before sharing. If you need EXIF preserved, a desktop tool is the better choice.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Why did one of my files fail to convert?</h3>
+      <p>Usually the file is not really HEIC despite the extension, or it is a Live Photo component, or it uses an uncommon encoding variant the browser decoder does not support. Try opening it on the phone first and exporting a copy.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>JPG or PNG — which should I pick?</h3>
+      <p>JPG for photographs, sharing, and anything going on a website. PNG if you need lossless quality or the image has sharp edges and flat colour, like a screenshot. For camera photos, JPG is almost always the right answer.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Can I convert HEIC on Android?</h3>
+      <p>Yes. This page works in Chrome on Android the same way it works on a desktop. Tap the drop zone to open the file picker and select photos from your storage.</p>
+    </div>
+
+  </div>
+
+
+  <article class="prose">
+
+    <h2>Why your iPhone photos are HEIC in the first place</h2>
+    <p>Apple switched the default camera format in 2017, with iOS 11. Before that every photo was a JPG. Since then, unless you have changed a setting, your iPhone saves photos as <strong>HEIC</strong> — High Efficiency Image Container, a wrapper around the HEIF standard.</p>
+    <p>The reason is storage. HEIC uses a much newer compression method than JPG, one derived from modern video codecs. In practice a HEIC photo takes roughly half the space of the same photo saved as JPG, at similar visible quality. On a phone holding several thousand photos, that difference is measured in gigabytes.</p>
+    <p>The format also does things JPG cannot. It stores 16-bit colour instead of 8-bit, which matters for HDR shots. It can hold several images in one file, which is how Live Photos and burst sequences work. It keeps depth maps from Portrait mode, which is what lets you re-edit the background blur later. None of that survives a conversion to JPG.</p>
+
+    <h2>So why can't anything open them?</h2>
+    <p>Because support outside Apple's ecosystem is still patchy, eight years on. The usual places it breaks:</p>
+    <ul>
+      <li><strong>Windows</strong> — Windows 11 handles HEIC in Photos, but the older Windows 10 install often needs a codec from the Microsoft Store, and on some machines that codec is a paid add-on.</li>
+      <li><strong>Older editing software</strong> — Photoshop supports it in recent versions; a copy from a few years ago will not.</li>
+      <li><strong>Websites and web forms</strong> — this is where most people hit the wall. Uploading ID to a bank, a photo to an insurance claim, an image to a listing site. Most upload forms accept JPG and PNG and silently reject anything else.</li>
+      <li><strong>Email recipients</strong> — you send a photo, the person on the other end gets a file their computer treats as unknown.</li>
+      <li><strong>Print services</strong> — many photo labs still want JPG.</li>
+    </ul>
+    <p>The frustrating part is that it usually works fine right up until it doesn't. AirDrop between Apple devices converts automatically, so the problem only appears when a file crosses over to Windows, Android or a web form.</p>
+
+    <h2>Converting HEIC to JPG here</h2>
+    <ol class="steps">
+      <li>Get the HEIC files onto the device you are using. From an iPhone, connect by cable and copy them across, or upload them into any cloud folder and download on the other end.</li>
+      <li>Drag them into the box at the top of this page, or click it and select them. There is no limit on how many.</li>
+      <li>Leave the format on JPG. Choose PNG instead only if you need lossless output — the files will be much larger.</li>
+      <li>Set quality. 88 is a good default. Below about 70 you will start to see artefacts in skies and skin tones.</li>
+      <li>Click Convert, then download each file, or use the zip button if there are several.</li>
+    </ol>
+
+    <div class="callout">
+      <p><strong>A note on why this one doesn't upload anything.</strong> Nearly every other HEIC converter sends your photos to a server, converts them there, and sends them back. That means a copy of your photo exists on hardware you don't control, governed by a privacy policy you didn't read, for a retention period you can't verify. For holiday snaps that may not bother you. For photos of documents, medical paperwork, children, or anything you'd rather not hand to a stranger, it should. This page decodes the file with JavaScript running inside your own browser. You can confirm it by opening your browser's developer tools, switching to the Network tab, and converting a photo — you will see no upload.</p>
+    </div>
+
+    <h2>Stopping your iPhone from making HEIC files at all</h2>
+    <p>If you keep running into this, change the setting once and the problem goes away for future photos.</p>
+    <h3>Shoot in JPG from now on</h3>
+    <p>Open <strong>Settings</strong>, go to <strong>Camera</strong>, then <strong>Formats</strong>, and choose <strong>Most Compatible</strong>. Your phone will shoot JPG from that point forward. Photos already in your library stay HEIC. You lose some storage efficiency and certain HDR capability, which for most people is a fair trade.</p>
+    <h3>Or convert only when transferring</h3>
+    <p>Keep shooting HEIC, but open <strong>Settings</strong> → <strong>Photos</strong>, scroll to <strong>Transfer to Mac or PC</strong>, and select <strong>Automatic</strong>. Photos are converted to JPG as they copy off the phone, and stay HEIC on the device.</p>
+
+    <h2>Does converting lose quality?</h2>
+    <p>Slightly, and it is worth understanding why. HEIC is already a lossy format, so the photo has been compressed once. Converting to JPG decompresses it and compresses it again using a different, older method — a second generation of loss.</p>
+    <p>At quality 85 to 95 the difference is invisible in normal viewing. You would need to zoom well past 100% on a detailed area to spot it. What you will lose without ambiguity is the extras: HDR range beyond 8-bit, depth data from Portrait mode, and the extra frames in a Live Photo. If any of that matters, keep the HEIC original and treat the JPG as a copy for sharing.</p>
+    <p>The JPG will also be larger than the HEIC it came from, often around double. That is the storage advantage of HEIC working in reverse.</p>
+
+    <h2>HEIC and HEIF — is there a difference?</h2>
+    <p>HEIF is the standard. HEIC is Apple's implementation of it, specifically the version using HEVC compression inside. Practically the two names refer to the same thing and files may carry either <code>.heic</code> or <code>.heif</code>. This converter accepts both.</p>
+
+    <h2>Common questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Is there a limit on how many photos I can convert?</summary>
+        <p>No fixed limit. Because everything runs on your own device, the only ceiling is your available memory. A few hundred photos at a time is comfortable on a modern computer. On an older phone or tablet, work in smaller batches.</p>
+      </details>
+      <details>
+        <summary>Does it work offline?</summary>
+        <p>Once the page has loaded, yes. The conversion itself needs no connection. Load the page while online, then you can disconnect and keep converting.</p>
+      </details>
+      <details>
+        <summary>Will the photo's date and location survive?</summary>
+        <p>Not reliably. Re-encoding through the browser drops most EXIF metadata, including capture date and GPS coordinates. If you need that information preserved, keep the HEIC originals as your archive. Some people consider the metadata stripping a benefit when sharing photos publicly.</p>
+      </details>
+      <details>
+        <summary>Can I do this on my phone directly?</summary>
+        <p>Yes, the page works in mobile browsers. On an iPhone it is often easier to use the Files app or a Shortcut, since the photos are already there. This page is most useful when the photos have already landed on a computer that can't open them.</p>
+      </details>
+      <details>
+        <summary>Why did one of my files fail to convert?</summary>
+        <p>Usually the file isn't really HEIC — sometimes something has been renamed with a <code>.heic</code> extension, or the file was truncated during transfer. Occasionally a HEIC variant uses a codec the browser decoder doesn't handle. Try recopying the file from the original source first.</p>
+      </details>
+      <details>
+        <summary>Is it actually free, and what's the catch?</summary>
+        <p>Free, no account, no watermark, no queue. There is no catch on the conversion side because there is no cost to serve it — your device does the work, not a server.</p>
+      </details>
+    </div>
+
+    <h2>Other converters here</h2>
+    <p>If you also need to resize photos or change between PNG, JPG and WebP, the <a href="/image-converter.html">bulk image converter</a> handles those in batches. For spreadsheet work, the <a href="/csv-to-json.html">CSV to JSON converter</a> turns dotted column headers into nested objects.</p>
+
+  </article>
+
+
+  <article class="prose">
+
+    <h2>Why your iPhone photos are HEIC in the first place</h2>
+    <p>Since iOS 11, Apple has saved photos as HEIC by default rather than JPG. HEIC is Apple's implementation of the HEIF container, and it stores images compressed with HEVC — the same codec used for 4K video. The practical result is that a photo takes roughly half the storage of the equivalent JPG at similar visible quality.</p>
+    <p>That is a genuinely good trade on the phone itself. The problem starts the moment the file leaves the phone. Windows cannot open HEIC without an extension from the Microsoft Store. Most content management systems reject it on upload. Older versions of Photoshop, plenty of print shops, and a long tail of web forms simply do not recognise the format. So people end up needing a converter not because HEIC is bad, but because almost nothing outside Apple's ecosystem supports it.</p>
+
+    <h2>Does converting HEIC to JPG lose quality?</h2>
+    <p>Yes, a little, and it is worth understanding why rather than just worrying about it.</p>
+    <p>Both HEIC and JPG are lossy formats. Converting between them means decoding the HEIC back to raw pixels and then re-encoding those pixels as JPG. That second encode introduces its own compression, on top of compression that already happened. This is generation loss, and it is unavoidable when moving between any two lossy formats.</p>
+    <p>In practice it is rarely visible. At the 88% quality this tool defaults to, the difference on a normal photograph is almost impossible to see without pixel-peeping. Where it does show up is in large flat areas of gradient — skies, studio backdrops — which can develop faint banding. If you are converting for print or for archival purposes, push the quality slider to 100, or choose PNG instead.</p>
+
+    <h3>When to pick PNG over JPG</h3>
+    <ul>
+      <li><strong>Choose JPG</strong> for photographs, anything going on a website, anything you are emailing. Far smaller files, universally supported.</li>
+      <li><strong>Choose PNG</strong> for screenshots, images with text or sharp edges, or anything you plan to edit further. PNG is lossless, so no additional generation loss is introduced — but the files will be considerably larger than the original HEIC.</li>
+    </ul>
+
+    <h2>What happens to the metadata</h2>
+    <p>This is the part most converters do not tell you about. When a HEIC is decoded and re-encoded in a browser, EXIF metadata is generally not carried across. That means the converted JPG will typically lose the capture date, camera settings, and GPS coordinates that were embedded in the original.</p>
+    <p>Whether that is a problem or a feature depends entirely on what you are doing:</p>
+    <ul>
+      <li>If you are <strong>posting photos publicly</strong>, stripping GPS coordinates is a privacy win. Photos taken at home carry your home address in them.</li>
+      <li>If you are <strong>archiving family photos</strong>, losing the capture date is a real loss, and your photo library will sort everything by conversion date instead. In that case keep the HEIC originals as well.</li>
+    </ul>
+    <p>Either way, keep the originals until you have checked the converted files are what you expected. Conversion is not something to do destructively.</p>
+
+    <h2>How to stop your iPhone shooting HEIC entirely</h2>
+    <p>If you convert photos regularly, it is usually less work to change the setting once. There are two separate controls and they do different things.</p>
+    <h3>Change what the camera captures</h3>
+    <p>Settings → Camera → Formats → choose <strong>Most Compatible</strong>. From then on the camera saves JPG rather than HEIC. Existing photos are not affected. The cost is roughly double the storage per photo, and you lose the ability to shoot certain high-efficiency video modes.</p>
+    <h3>Change what happens when you transfer</h3>
+    <p>Settings → Photos → scroll to Transfer to Mac or PC → choose <strong>Automatic</strong>. This keeps HEIC on the phone but converts to JPG when you plug into a computer. It is the better option if you want to save storage on the device but never want to deal with HEIC on the desktop.</p>
+
+    <h2>Why this converter does not upload your photos</h2>
+    <p>Most online converters work by uploading your file to their server, converting it there, and giving you a download link. That means a copy of your photograph exists on hardware you do not control, for a retention period you have to take on trust.</p>
+    <p>For a screenshot of a menu, nobody cares. For photos of your children, a scan of your passport, or images from a medical appointment, it is a meaningful thing to hand over — particularly given those HEIC files carry GPS coordinates.</p>
+    <p>This tool decodes HEIC in JavaScript inside the tab you already have open. There is no upload step because there is no server involved in the conversion. You do not have to take that on trust either: open your browser's developer tools, switch to the Network tab, and convert a file. You will see the page's own assets load and nothing else. No request carries your photo anywhere.</p>
+
+    <h2>Common problems</h2>
+    <h3>"Could not decode" on some files</h3>
+    <p>Usually the file is not actually HEIC. Files renamed to <code>.heic</code>, or HEIC files already partially processed by another app, will fail. Check the original on the phone. Some HEIC files containing burst sequences or depth data also decode inconsistently.</p>
+    <h3>The browser slows down or the tab crashes</h3>
+    <p>HEIC decoding is genuinely demanding, and every converted image is held in memory until you clear it. On a phone or an older laptop, work in batches of twenty or thirty rather than dropping in an entire camera roll.</p>
+    <h3>Live Photos only convert the still frame</h3>
+    <p>A Live Photo is a HEIC still plus a separate short video file. Converting gives you the still image only. The video component needs to be exported separately from the Photos app.</p>
+
+  </article>
+
+  <section class="prose">
+    <h2>Questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Is this converter free?</summary>
+        <p>Yes, with no account, no sign-up and no file limit. The conversion runs on your own device, so there are no server costs to pass on.</p>
+      </details>
+      <details>
+        <summary>Are my photos uploaded anywhere?</summary>
+        <p>No. Decoding happens in JavaScript in your browser. You can verify this by opening developer tools, switching to the Network tab, and converting a file — no request containing your photo is made.</p>
+      </details>
+      <details>
+        <summary>How many photos can I convert at once?</summary>
+        <p>There is no hard limit, but each converted image is held in memory. Twenty to fifty at a time is comfortable on a normal laptop. On a phone, work in smaller batches.</p>
+      </details>
+      <details>
+        <summary>Will the converted photo lose quality?</summary>
+        <p>Slightly, because both formats are lossy and re-encoding introduces some generation loss. At the default 88% quality it is very hard to see. Set quality to 100 or choose PNG if you need a pixel-accurate result.</p>
+      </details>
+      <details>
+        <summary>Does it keep the date and location data?</summary>
+        <p>Generally no. EXIF metadata including capture date and GPS coordinates is usually dropped during conversion. That protects your privacy when sharing publicly, but means you should keep the originals if you are archiving.</p>
+      </details>
+      <details>
+        <summary>Does it work on iPhone and Android?</summary>
+        <p>Yes, in any modern mobile browser. Use smaller batches on mobile since memory is more limited than on a desktop.</p>
+      </details>
+      <details>
+        <summary>What is the difference between HEIC and HEIF?</summary>
+        <p>HEIF is the container format. HEIC is that container holding an image compressed with HEVC, which is what Apple uses. In everyday terms they refer to the same thing, and both extensions work here.</p>
+      </details>
+    </div>
+  </section>
 
   <footer>
     <a href="/">All tools</a>
@@ -191,6 +477,104 @@
     zipBtn.disabled = false; say('Zip ready.','ok');
   });
 })();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "HEIC to JPG Converter",
+  "description": "Convert iPhone HEIC and HEIF photos to JPG or PNG in bulk, entirely in the browser. Files are never uploaded to a server.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any web browser",
+  "browserRequirements": "Requires JavaScript",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": [
+    "Batch conversion of multiple files",
+    "JPG and PNG output",
+    "Adjustable quality",
+    "Download all results as a zip",
+    "Runs fully client side with no upload"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"How many photos can I convert at once?","acceptedAnswer":{"@type":"Answer","text":"There is no fixed limit. The constraint is your device's memory, since every photo is decoded in the browser. A modern laptop handles a few hundred without complaint. On an older phone, work in batches of twenty or thirty."}},
+    {"@type":"Question","name":"Is it free, and is there a watermark?","acceptedAnswer":{"@type":"Answer","text":"Free with no watermark, no account, no email, and no file count limit. There is no server bill to cover because there is no server doing the work."}},
+    {"@type":"Question","name":"Does this work offline?","acceptedAnswer":{"@type":"Answer","text":"Once the page has loaded, yes. The conversion itself needs no connection. If you load the page and then lose internet, conversions keep working until you refresh."}},
+    {"@type":"Question","name":"Will the photo lose its date, location or camera settings?","acceptedAnswer":{"@type":"Answer","text":"Yes. The browser's canvas re-encodes pixels only, so EXIF metadata including timestamp, GPS coordinates, camera model and lens data is not carried across. If you need EXIF preserved, a desktop tool is the better choice."}},
+    {"@type":"Question","name":"Why did one of my files fail to convert?","acceptedAnswer":{"@type":"Answer","text":"Usually the file is not really HEIC despite the extension, or it is a Live Photo component, or it uses an uncommon encoding variant the browser decoder does not support. Try opening it on the phone first and exporting a copy."}},
+    {"@type":"Question","name":"Should I choose JPG or PNG?","acceptedAnswer":{"@type":"Answer","text":"JPG for photographs, sharing, and anything going on a website. PNG if you need lossless quality or the image has sharp edges and flat colour, like a screenshot. For camera photos, JPG is almost always the right answer."}},
+    {"@type":"Question","name":"Can I convert HEIC on Android?","acceptedAnswer":{"@type":"Answer","text":"Yes. This page works in Chrome on Android the same way it works on a desktop. Tap the drop zone to open the file picker and select photos from your storage."}}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication",
+"name":"HEIC to JPG Converter",
+"url":"https://local-convert.toptierrankers.workers.dev/heic-to-jpg.html",
+"description":"Converts iPhone HEIC and HEIF photos to JPG or PNG in the browser.",
+"applicationCategory":"UtilitiesApplication",
+"operatingSystem":"Any modern web browser",
+"browserRequirements":"Requires JavaScript",
+"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+"featureList":["Runs entirely in the browser","No file upload","No account required","Batch processing"]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Is there a limit on how many HEIC photos I can convert?","acceptedAnswer":{"@type":"Answer","text":"No fixed limit. Conversion runs on your own device, so the only ceiling is available memory. A few hundred photos at a time is comfortable on a modern computer."}},
+{"@type":"Question","name":"Does HEIC to JPG conversion lose quality?","acceptedAnswer":{"@type":"Answer","text":"Slightly. HEIC is already lossy, so converting to JPG adds a second generation of compression. At quality 85 to 95 the difference is invisible in normal viewing. You do lose HDR range beyond 8-bit, Portrait mode depth data, and Live Photo frames."}},
+{"@type":"Question","name":"How do I stop my iPhone saving photos as HEIC?","acceptedAnswer":{"@type":"Answer","text":"Open Settings, go to Camera, then Formats, and choose Most Compatible. Your iPhone will shoot JPG from then on. Existing photos remain HEIC."}},
+{"@type":"Question","name":"What is the difference between HEIC and HEIF?","acceptedAnswer":{"@type":"Answer","text":"HEIF is the standard and HEIC is Apple's implementation of it using HEVC compression. In practice they refer to the same thing, and files may use either extension."}},
+{"@type":"Question","name":"Are my photos uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. The decoder runs as JavaScript inside your browser. You can verify this by opening developer tools, switching to the Network tab, and converting a photo — no file leaves your device."}},
+{"@type":"Question","name":"Will the photo date and GPS location be preserved?","acceptedAnswer":{"@type":"Answer","text":"Not reliably. Re-encoding through the browser drops most EXIF metadata including capture date and GPS coordinates. Keep the HEIC originals if you need that information."}}
+]}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"WebApplication",
+      "name":"HEIC to JPG Converter",
+      "url":"https://local-convert.toptierrankers.workers.dev/heic-to-jpg.html",
+      "applicationCategory":"UtilitiesApplication",
+      "operatingSystem":"Any modern web browser",
+      "browserRequirements":"Requires JavaScript",
+      "description":"Convert iPhone HEIC and HEIF photos to JPG or PNG in bulk, entirely in the browser with no upload.",
+      "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+      "featureList":["Bulk conversion","JPG and PNG output","Adjustable quality","Zip download","No upload required"]
+    },
+    {
+      "@type":"FAQPage",
+      "mainEntity":[
+        {"@type":"Question","name":"Is this converter free?","acceptedAnswer":{"@type":"Answer","text":"Yes, with no account, no sign-up and no file limit. The conversion runs on your own device, so there are no server costs to pass on."}},
+        {"@type":"Question","name":"Are my photos uploaded anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. Decoding happens in JavaScript in your browser. You can verify this by opening developer tools, switching to the Network tab, and converting a file."}},
+        {"@type":"Question","name":"How many photos can I convert at once?","acceptedAnswer":{"@type":"Answer","text":"There is no hard limit, but each converted image is held in memory. Twenty to fifty at a time is comfortable on a normal laptop."}},
+        {"@type":"Question","name":"Will the converted photo lose quality?","acceptedAnswer":{"@type":"Answer","text":"Slightly, because both formats are lossy and re-encoding introduces generation loss. At the default 88% quality it is very hard to see. Set quality to 100 or choose PNG for a pixel-accurate result."}},
+        {"@type":"Question","name":"Does it keep the date and location data?","acceptedAnswer":{"@type":"Answer","text":"Generally no. EXIF metadata including capture date and GPS coordinates is usually dropped during conversion. Keep the originals if you are archiving."}},
+        {"@type":"Question","name":"Does it work on iPhone and Android?","acceptedAnswer":{"@type":"Answer","text":"Yes, in any modern mobile browser. Use smaller batches on mobile since memory is more limited."}},
+        {"@type":"Question","name":"What is the difference between HEIC and HEIF?","acceptedAnswer":{"@type":"Answer","text":"HEIF is the container format. HEIC is that container holding an image compressed with HEVC, which is what Apple uses. Both extensions work here."}}
+      ]
+    },
+    {
+      "@type":"HowTo",
+      "name":"How to convert HEIC to JPG",
+      "totalTime":"PT1M",
+      "step":[
+        {"@type":"HowToStep","name":"Add your photos","text":"Drag HEIC files onto the drop area, or click it to choose files from your device."},
+        {"@type":"HowToStep","name":"Choose format and quality","text":"Pick JPG or PNG, and set the quality slider. 88% suits most photographs."},
+        {"@type":"HowToStep","name":"Convert","text":"Press Convert. Each photo is decoded and re-encoded on your own device."},
+        {"@type":"HowToStep","name":"Download","text":"Download files individually, or use Download all as zip when converting several."}
+      ]
+    }
+  ]
+}
 </script>
 </body>
 </html>
